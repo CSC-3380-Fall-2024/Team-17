@@ -43,5 +43,4 @@ public class World : Spatial
 		{
 			cell.UpdateFaces(usedTiles);
 		}
-		
 }
