@@ -1,20 +1,23 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Cell.cs" type="Script" id=1]
+
+[sub_resource type="BoxShape" id=1]
 
 [node name="Cell" type="Area"]
 script = ExtResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
+[node name="topFace" type="MeshInstance" parent="."]
 
-[node name="MeshInstance2" type="MeshInstance" parent="."]
+[node name="northFace" type="MeshInstance" parent="."]
 
-[node name="MeshInstance3" type="MeshInstance" parent="."]
+[node name="eastFace" type="MeshInstance" parent="."]
 
-[node name="MeshInstance4" type="MeshInstance" parent="."]
+[node name="southFace" type="MeshInstance" parent="."]
 
-[node name="MeshInstance5" type="MeshInstance" parent="."]
+[node name="westFace" type="MeshInstance" parent="."]
 
-[node name="MeshInstance6" type="MeshInstance" parent="."]
+[node name="bottomFace" type="MeshInstance" parent="."]
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 1 )
