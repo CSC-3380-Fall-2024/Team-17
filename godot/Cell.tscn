@@ -20,4 +20,5 @@ script = ExtResource( 1 )
 [node name="bottomFace" type="MeshInstance" parent="."]
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 shape = SubResource( 1 )

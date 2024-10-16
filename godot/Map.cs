@@ -3,8 +3,8 @@ using System;
 
 public class Map : Node2D
 {
-	static void GetTileMap()
+	public TileMap GetTileMap()
 	{
-		return Godot.find_node("MapCreator")
+		return GetNode<TileMap>("MapCreator");
 	}
 }

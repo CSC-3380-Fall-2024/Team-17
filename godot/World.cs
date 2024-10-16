@@ -1,6 +1,6 @@
 using Godot;
 using System;
-using System.Collections.Genric
+using System.Collections.Generic;
 
 public class World : Spatial
 {
@@ -11,8 +11,8 @@ public class World : Spatial
 	
 	public override void _Ready()
 	{
-		 var environment = GetTree().Root.World.FallbackEnvironment;
-		environment.BackgroundMode = Environment.BgColor;
+		var environment = GetTree().Root.World.FallbackEnvironment as Godot.Environment;
+		if (environment != null)
 		environment.BackgroundColor = new Color(0, 0, 0); // Black color
 		environment.AmbientLightColor = new Color(0.263f, 0.176f, 0.427f); // Equivalent to Color("432d6d")
 		environment.DofBlurFarEnabled = true;
@@ -23,13 +23,13 @@ public class World : Spatial
 	 
 	private void GenerateMap()
 	{
-		if (!(Map is PackedScene)) return;
+		if (Map == null) return;
 		
-		var map = (PackedScene)Map.Instance();
-		var tileMap = map.GetNode<TileMap>("TileMap");
+		var mapInstance = Map.Instance();
+		var tileMap = mapInstance.GetNode<TileMap>("TileMap");
 		
-		var used Tiles = tileMap.GetUsedCells();
-		map.QueueFree();
+		var usedTiles = tileMap.GetUsedCells();
+		mapInstance.QueueFree();
 		
 		foreach (var tile in usedTiles)
 		{
@@ -43,4 +43,5 @@ public class World : Spatial
 		{
 			cell.UpdateFaces(usedTiles);
 		}
+	}
 }
