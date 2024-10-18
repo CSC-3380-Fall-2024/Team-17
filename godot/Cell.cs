@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Linq;
 
 public class Cell : Area
 {
@@ -20,23 +21,23 @@ public class Cell : Area
 		bottomFace = GetNode<MeshInstance>("BottomFace");
 	}
 
-	public void UpdateFaces(Godot.Collections.Dictionary<Vector2, Cell> cellList)
+	public void UpdateFaces(Godot.Collections.Array<Vector2> cellList)
 	{
 		Vector2 myGridPosition = new Vector2(Translation.x / Globals.GRID_SIZE, Translation.z / 2);
 
-		if (cellList.ContainsKey(myGridPosition + Vector2.Right))
+		if (cellList.Contains(myGridPosition + Vector2.Right))
 		{
 			eastFace.QueueFree();
 		}
-		if (cellList.ContainsKey(myGridPosition + Vector2.Left))
+		if (cellList.Contains(myGridPosition + Vector2.Left))
 		{
 			westFace.QueueFree();
 		}
-		if (cellList.ContainsKey(myGridPosition + Vector2.Down))
+		if (cellList.Contains(myGridPosition + Vector2.Down))
 		{
 			southFace.QueueFree();
 		}
-		if (cellList.ContainsKey(myGridPosition + Vector2.Up))
+		if (cellList.Contains(myGridPosition + Vector2.Up))
 		{
 			northFace.QueueFree();
 		}
