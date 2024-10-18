@@ -1,5 +1,6 @@
 
 using Godot;
+using Godot.Collections;
 using System;
 using System.Collections.Generic;
 
@@ -29,10 +30,14 @@ public class World : Spatial
 		var mapInstance = Map.Instance();
 		var tileMap = mapInstance.GetNode<TileMap>("TileMap");
 		
-		var usedTiles = tileMap.GetUsedCells();
+		Array<Vector2> usedTiles = new Array<Vector2>();
+		foreach (var vector in tileMap.GetUsedCells())
+		{
+			usedTiles.Add((Vector2)vector);
+		}
 		mapInstance.QueueFree();
 		
-		foreach (var tile in usedTiles)
+		foreach (Vector2 tile in usedTiles)
 		{
 			var cell = (Cell)GD.Load<PackedScene>("res://Cell.tscn").Instance();
 				AddChild(cell);
