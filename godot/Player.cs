@@ -1,5 +1,7 @@
 using Godot;
 using System.Collections;
+using System.Threading.Tasks;
+
 
 public class YourScript : Spatial
 {
@@ -30,12 +32,19 @@ public class YourScript : Spatial
 	}
 
 	private Vector3 GetDirection(RayCast direction)
+{
+	if (direction is RayCast && direction.IsColliding())
 	{
-		if (!(direction is RayCast)) return Vector3.Zero;
-		return direction.GetCollider().GlobalTransform.origin - GlobalTransform.origin;
+		var collider = direction.GetCollider() as Spatial; 
+		if (collider != null)
+		{
+			return collider.GlobalTransform.origin - GlobalTransform.origin;
+		}
 	}
+	return Vector3.Zero;
+}
 
-	private async void TweenTranslation(Vector3 change)
+	private async Task TweenTranslation(Vector3 change)
 	{
 		GetNode<AnimationPlayer>("AnimationPlayer").Play("Step");
 		tween.InterpolateProperty(
@@ -46,7 +55,7 @@ public class YourScript : Spatial
 		await ToSignal(tween, "tween_completed");
 	}
 
-	private async void TweenRotation(float change)
+	private async Task TweenRotation(float change)
 	{
 		tween.InterpolateProperty(
 			this, "rotation", Rotation, Rotation + new Vector3(0, change, 0),
