@@ -1,7 +1,7 @@
 using Godot;
 using System.Collections;
 
-public class YourScript : Spatial
+public class Player : Spatial
 {
 	private Timer timerprocessor;
 	private Tween tween;
@@ -30,10 +30,18 @@ public class YourScript : Spatial
 	}
 
 	private Vector3 GetDirection(RayCast direction)
+{
+	if (direction is null || !direction.IsColliding()) return Vector3.Zero;
+
+	var collider = direction.GetCollider() as Spatial;
+	if (collider != null)
 	{
-		if (!(direction is RayCast)) return Vector3.Zero;
-		return direction.GetCollider().GlobalTransform.origin - GlobalTransform.origin;
+		return collider.GlobalTransform.origin - GlobalTransform.origin;
 	}
+	
+	return Vector3.Zero;
+}
+
 
 	private async void TweenTranslation(Vector3 change)
 	{
