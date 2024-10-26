@@ -32,7 +32,7 @@ public class Player : Spatial
 		return false;
 	}
 
-private Vector3 GetDirection(RayCast direction)
+	private Vector3 GetDirection(RayCast direction)
 	{
 		if (direction is RayCast && direction.IsColliding())
 		{
@@ -43,12 +43,7 @@ private Vector3 GetDirection(RayCast direction)
 			}
 		}
 		return Vector3.Zero;
-
 	}
-	
-	return Vector3.Zero;
-}
-
 
 	private async Task TweenTranslation(Vector3 change)
 	{
