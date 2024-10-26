@@ -2,8 +2,7 @@ using Godot;
 using System.Collections;
 using System.Threading.Tasks;
 
-
-public class YourScript : Spatial
+public class Player : Spatial
 {
 	private Timer timerprocessor;
 	private Tween tween;
@@ -20,6 +19,9 @@ public class YourScript : Spatial
 		back = GetNode<RayCast>("RayBack");
 		right = GetNode<RayCast>("RayRight");
 		left = GetNode<RayCast>("RayLeft");
+		
+		timerprocessor.Connect("timeout", this, nameof(OnTimerTimeout));
+
 	}
 
 	private bool CollisionCheck(RayCast direction)
@@ -73,6 +75,9 @@ public class YourScript : Spatial
 		bool goD = Input.IsActionPressed("strafe_right");
 		bool turnQ = Input.IsActionPressed("turn_left");
 		bool turnE = Input.IsActionPressed("turn_right");
+		
+
+
 
 		RayCast rayDir = null;
 		int turnDir = (turnQ ? 1 : 0) - (turnE ? 1 : 0);
