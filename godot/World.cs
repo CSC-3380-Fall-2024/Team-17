@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public class World : Spatial
 {
-	[Export] // Makes it so we can see in Editor
+	[Export] 
 	public PackedScene Map;
 	
 	private List<Cell> cells = new List<Cell>();
@@ -15,36 +15,39 @@ public class World : Spatial
 	{
 		var environment = GetTree().Root.World.FallbackEnvironment as Godot.Environment;
 		if (environment != null)
-		environment.BackgroundColor = new Color(0, 0, 0); // Black color
-		environment.AmbientLightColor = new Color(0.263f, 0.176f, 0.427f); // Equivalent to Color("432d6d")
+		environment.BackgroundColor = new Color(0, 0, 0); 
+		environment.AmbientLightColor = new Color(0.263f, 0.176f, 0.427f); 
 		environment.DofBlurFarEnabled = true;
 		environment.DofBlurNearEnabled = true;
 		
-		GenerateMap(); //Call Map Generation
+		GenerateMap(); 
 	}
 	 
 	private void GenerateMap()
 	{
 		if (Map == null) return;
 		
-		var mapInstance = Map.Instance();
-		var tileMap = mapInstance.GetNode<TileMap>("TileMap");
-		
+		var mapInstance = Map.Instance(); 
+		AddChild(mapInstance);
+		var mapScript = mapInstance as Map;
+		var tileMap = mapScript.GetTileMap(); 
 		Array<Vector2> usedTiles = new Array<Vector2>();
 		foreach (var vector in tileMap.GetUsedCells())
 		{
 			usedTiles.Add((Vector2)vector);
 		}
+
 		mapInstance.QueueFree();
-		
+	
 		foreach (Vector2 tile in usedTiles)
 		{
 			var cell = (Cell)GD.Load<PackedScene>("res://Cell.tscn").Instance();
-				AddChild(cell);
-				cell.Translation = new Vector3(tile.x * Globals.GRID_SIZE, 0, tile.y * Globals.GRID_SIZE);
-				cells.Add(cell);
+			AddChild(cell);
+			cell.Translation = new Vector3(tile.x * Globals.GRID_SIZE, 0, tile.y * Globals.GRID_SIZE);
+			cells.Add(cell);
+			GD.Print($"Cell created at: {cell.Translation}");
 		}
-		
+	
 		foreach (var cell in cells)
 		{
 			cell.UpdateFaces(usedTiles);

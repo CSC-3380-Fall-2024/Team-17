@@ -1,5 +1,6 @@
 using Godot;
 using System.Collections;
+using System.Threading.Tasks;
 
 public class Player : Spatial
 {
@@ -18,6 +19,8 @@ public class Player : Spatial
 		back = GetNode<RayCast>("RayBack");
 		right = GetNode<RayCast>("RayRight");
 		left = GetNode<RayCast>("RayLeft");
+
+		timerprocessor.Connect("timeout", this, nameof(OnTimerTimeout));
 	}
 
 	private bool CollisionCheck(RayCast direction)
@@ -29,21 +32,25 @@ public class Player : Spatial
 		return false;
 	}
 
-	private Vector3 GetDirection(RayCast direction)
-{
-	if (direction is null || !direction.IsColliding()) return Vector3.Zero;
-
-	var collider = direction.GetCollider() as Spatial;
-	if (collider != null)
+private Vector3 GetDirection(RayCast direction)
 	{
-		return collider.GlobalTransform.origin - GlobalTransform.origin;
+		if (direction is RayCast && direction.IsColliding())
+		{
+			var collider = direction.GetCollider() as Spatial;
+			if (collider != null)
+			{
+				return collider.GlobalTransform.origin - GlobalTransform.origin;
+			}
+		}
+		return Vector3.Zero;
+
 	}
 	
 	return Vector3.Zero;
 }
 
 
-	private async void TweenTranslation(Vector3 change)
+	private async Task TweenTranslation(Vector3 change)
 	{
 		GetNode<AnimationPlayer>("AnimationPlayer").Play("Step");
 		tween.InterpolateProperty(
@@ -54,7 +61,7 @@ public class Player : Spatial
 		await ToSignal(tween, "tween_completed");
 	}
 
-	private async void TweenRotation(float change)
+	private async Task TweenRotation(float change)
 	{
 		tween.InterpolateProperty(
 			this, "rotation", Rotation, Rotation + new Vector3(0, change, 0),
@@ -74,36 +81,35 @@ public class Player : Spatial
 		bool turnE = Input.IsActionPressed("turn_right");
 
 		RayCast rayDir = null;
+		Vector3 movementDirection = Vector3.Zero;
 		int turnDir = (turnQ ? 1 : 0) - (turnE ? 1 : 0);
+		float tileSize = Globals.GRID_SIZE;
 
-		if (goW)
+		if (goW) movementDirection += -GlobalTransform.basis.z;
+		if (goS) movementDirection += GlobalTransform.basis.z;
+		if (goA) movementDirection += -GlobalTransform.basis.x;
+		if (goD) movementDirection += GlobalTransform.basis.x;
+
+		if (movementDirection != Vector3.Zero)
 		{
-			rayDir = forward;
+			movementDirection = movementDirection.Normalized() * tileSize;
 		}
-		else if (goS)
-		{
-			rayDir = back;
-		}
-		else if (goA)
-		{
-			rayDir = left;
-		}
-		else if (goD)
-		{
-			rayDir = right;
-		}
-		else if (turnDir != 0)
+
+		if (turnDir != 0)
 		{
 			timerprocessor.Stop();
 			await TweenRotation(Mathf.Pi / 2 * turnDir);
 			timerprocessor.Start();
 		}
 
-		if (CollisionCheck(rayDir))
+		if (movementDirection != Vector3.Zero)
 		{
-			timerprocessor.Stop();
-			await TweenTranslation(GetDirection(rayDir));
-			timerprocessor.Start();
+			if (!CollisionCheck(rayDir))
+			{
+				timerprocessor.Stop();
+				await TweenTranslation(movementDirection);
+				timerprocessor.Start();
+			}
 		}
 	}
 }
