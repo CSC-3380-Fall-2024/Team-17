@@ -9,27 +9,27 @@
 [node name="Cell" type="Area"]
 script = ExtResource( 1 )
 
-[node name="topFace" type="MeshInstance" parent="."]
+[node name="TopFace" type="MeshInstance" parent="."]
 transform = Transform( -1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 0, 2, 0 )
 mesh = ExtResource( 3 )
 
-[node name="northFace" type="MeshInstance" parent="."]
+[node name="NorthFace" type="MeshInstance" parent="."]
 transform = Transform( -1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, -1 )
 mesh = ExtResource( 2 )
 
-[node name="eastFace" type="MeshInstance" parent="."]
+[node name="EastFace" type="MeshInstance" parent="."]
 transform = Transform( 0, -1, 0, 0, 0, 1, -1, 0, 0, 1, 1, 0 )
 mesh = ExtResource( 2 )
 
-[node name="southFace" type="MeshInstance" parent="."]
+[node name="SouthFace" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1, 1 )
 mesh = ExtResource( 2 )
 
-[node name="westFace" type="MeshInstance" parent="."]
+[node name="WestFace" type="MeshInstance" parent="."]
 transform = Transform( -4.37114e-08, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1, 4.37114e-08, 1.91069e-15, -1, 1, 0 )
 mesh = ExtResource( 2 )
 
-[node name="bottomFace" type="MeshInstance" parent="."]
+[node name="BottomFace" type="MeshInstance" parent="."]
 mesh = ExtResource( 3 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
