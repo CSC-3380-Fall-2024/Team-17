@@ -30,7 +30,7 @@ public class World : Spatial
 		var mapInstance = Map.Instance(); 
 		AddChild(mapInstance);
 		var mapScript = mapInstance as Map;
-		var tileMap = mapScript.GetTileMap(); 
+		var tileMap = mapScript.GetTileMap("DevRoom"); 
 		Array<Vector2> usedTiles = new Array<Vector2>();
 		foreach (var vector in tileMap.GetUsedCells())
 		{
