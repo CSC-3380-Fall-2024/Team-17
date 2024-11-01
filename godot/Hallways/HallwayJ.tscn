@@ -25,11 +25,11 @@
 0/shapes = [  ]
 0/z_index = 0
 
-[node name="HallwayG" type="Node2D"]
+[node name="HallwayJ" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource( 1 )
 cell_size = Vector2( 32, 32 )
 cell_quadrant_size = 32
 format = 1
-tile_data = PoolIntArray( 65533, 0, 0, 65534, 0, 0, 65535, 0, 0 )
+tile_data = PoolIntArray( -65538, 0, 0, -65537, 0, 0, -1, 0, 0, 65535, 0, 0, 0, 0, 0, 1, 0, 0 )
