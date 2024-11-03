@@ -18,6 +18,17 @@ config/icon="res://icon.png"
 
 common/drop_mouse_on_gui_input_disabled=true
 
+[importer_defaults]
+
+wavefront_obj={
+"generate_tangents": true,
+"octahedral_compression": true,
+"offset_mesh": Vector3( 0, 0, 0 ),
+"optimize_mesh_flags": 4286,
+"scale_mesh": Vector3( 1, 1, 1 ),
+"vertex_cache_optimization": true
+}
+
 [input]
 
 forward={
