@@ -40,6 +40,11 @@ script = ExtResource( 1 )
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 0, 1, 0.5 )
 
+[node name="RayCast" type="RayCast" parent="Camera"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5889e-07, 0, -0.908744 )
+enabled = true
+cast_to = Vector3( 0, 0, -3 )
+
 [node name="Light" type="OmniLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 light_color = Color( 1, 0.996078, 0.835294, 1 )
