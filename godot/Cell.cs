@@ -30,7 +30,7 @@ public class Cell : Area
 	}
 
 	private void SpawnInteractable()
-	{
+{
 		// Generate a random value between 0 and 1, and spawn the interactable if within probability
 		if (random.NextDouble() < spawnProbability && interactable != null)
 		{
@@ -39,6 +39,7 @@ public class Cell : Area
 			interactableInstance.Translation = new Vector3(0, 1, 0); // Adjust position as needed
 		}
 	}
+
 	
 	public void UpdateFaces(Godot.Collections.Array<Vector2> cellList)
 	{
