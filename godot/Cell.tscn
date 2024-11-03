@@ -6,6 +6,7 @@
 
 
 [sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.98391, 1, 0.985166 )
 
 [node name="Cell" type="Area"]
 script = ExtResource( 1 )
