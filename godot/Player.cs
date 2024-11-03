@@ -1,4 +1,5 @@
 using Godot;
+using System;
 using System.Collections;
 using System.Threading.Tasks;
 
@@ -80,17 +81,11 @@ public class Player : Spatial
 		int turnDir = (turnQ ? 1 : 0) - (turnE ? 1 : 0);
 		float tileSize = Globals.GRID_SIZE;
 
-		if (goW) movementDirection += -GlobalTransform.basis.z;
-		if (goS) movementDirection += GlobalTransform.basis.z;
-		if (goA) movementDirection += -GlobalTransform.basis.x;
-		if (goD) movementDirection += GlobalTransform.basis.x;
-
-		if (movementDirection != Vector3.Zero)
-		{
-			movementDirection = movementDirection.Normalized() * tileSize;
-		}
-
-		if (turnDir != 0)
+		if (goW) movementDirection += -GlobalTransform.basis.z * Globals.GRID_SIZE;
+		else if (goS) movementDirection += GlobalTransform.basis.z * Globals.GRID_SIZE;
+		else if (goA) movementDirection += -GlobalTransform.basis.x * Globals.GRID_SIZE;
+		else if (goD) movementDirection += GlobalTransform.basis.x *Globals.GRID_SIZE;
+		else if (Convert.ToBoolean(turnDir))
 		{
 			timerprocessor.Stop();
 			await TweenRotation(Mathf.Pi / 2 * turnDir);
