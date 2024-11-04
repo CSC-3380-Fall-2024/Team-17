@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 public class Player : Spatial
@@ -33,19 +34,6 @@ public class Player : Spatial
 		return false;
 	}
 
-	private Vector3 GetDirection(RayCast direction)
-	{
-		if (direction is RayCast && direction.IsColliding())
-		{
-			var collider = direction.GetCollider() as Spatial;
-			if (collider != null)
-			{
-				return collider.GlobalTransform.origin - GlobalTransform.origin;
-			}
-		}
-		return Vector3.Zero;
-	}
-
 	private async Task TweenTranslation(Vector3 change)
 	{
 		GetNode<AnimationPlayer>("AnimationPlayer").Play("Step");
@@ -76,11 +64,9 @@ public class Player : Spatial
 		bool turnQ = Input.IsActionPressed("turn_left");
 		bool turnE = Input.IsActionPressed("turn_right");
 
-		RayCast rayDir = null;
+		List<RayCast> rDirList = new List<RayCast>(){forward, back, right, left};
 		Vector3 movementDirection = Vector3.Zero;
 		int turnDir = (turnQ ? 1 : 0) - (turnE ? 1 : 0);
-		float tileSize = Globals.GRID_SIZE;
-
 		if (goW) movementDirection += -GlobalTransform.basis.z * Globals.GRID_SIZE;
 		else if (goS) movementDirection += GlobalTransform.basis.z * Globals.GRID_SIZE;
 		else if (goA) movementDirection += -GlobalTransform.basis.x * Globals.GRID_SIZE;
@@ -91,15 +77,51 @@ public class Player : Spatial
 			await TweenRotation(Mathf.Pi / 2 * turnDir);
 			timerprocessor.Start();
 		}
-
+		
 		if (movementDirection != Vector3.Zero)
 		{
-			if (!CollisionCheck(rayDir))
+			if(goW)
 			{
-				timerprocessor.Stop();
-				await TweenTranslation(movementDirection);
-				timerprocessor.Start();
+					if (CollisionCheck(forward))
+				{
+					GD.Print($"Moved Forward");
+					timerprocessor.Stop();
+					await TweenTranslation(movementDirection);
+					timerprocessor.Start();
+				}
 			}
+			else if(goS)
+			{
+					if (CollisionCheck(back))
+				{
+					GD.Print($"Moved Backwards");
+					timerprocessor.Stop();
+					await TweenTranslation(movementDirection);
+					timerprocessor.Start();
+				}
+			}
+			else if(goA)
+			{
+					if (CollisionCheck(left))
+				{
+					GD.Print($"Moved Left");
+					timerprocessor.Stop();
+					await TweenTranslation(movementDirection);
+					timerprocessor.Start();
+				}
+			}
+			else if(goD)
+			{
+					if (CollisionCheck(right))
+				{
+					GD.Print($"Moved Right");
+					timerprocessor.Stop();
+					await TweenTranslation(movementDirection);
+					timerprocessor.Start();
+				}
+			}
+			
 		}
+		
 	}
 }

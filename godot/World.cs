@@ -3,6 +3,7 @@ using Godot;
 using Godot.Collections;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class World : Spatial
 {
@@ -10,6 +11,7 @@ public class World : Spatial
 	public PackedScene Map;
 	
 	private List<Cell> cells = new List<Cell>();
+
 	
 	public override void _Ready()
 	{
@@ -47,7 +49,8 @@ public class World : Spatial
 			cells.Add(cell);
 			GD.Print($"Cell created at: {cell.Translation}");
 		}
-	
+
+
 		foreach (var cell in cells)
 		{
 			cell.UpdateFaces(usedTiles);

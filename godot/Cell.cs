@@ -1,4 +1,5 @@
 using Godot;
+using System.Collections.Generic;
 using System;
 using System.Linq;
 
@@ -10,7 +11,7 @@ public class Cell : Area
 	private MeshInstance southFace;
 	private MeshInstance westFace;
 	private MeshInstance bottomFace;
-	
+
 	public override void _Ready()
 	{
 		topFace = GetNode<MeshInstance>("TopFace");
@@ -27,19 +28,25 @@ public class Cell : Area
 
 		if (cellList.Contains(myGridPosition + Vector2.Right))
 		{
+			
 			eastFace.QueueFree();
+
 		}
 		if (cellList.Contains(myGridPosition + Vector2.Left))
 		{
 			westFace.QueueFree();
+
 		}
 		if (cellList.Contains(myGridPosition + Vector2.Down))
 		{
 			southFace.QueueFree();
+
 		}
 		if (cellList.Contains(myGridPosition + Vector2.Up))
 		{
 			northFace.QueueFree();
+
 		}
+
 	}
 }
