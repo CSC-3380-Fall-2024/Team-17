@@ -1,16 +1,27 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=14 format=2]
 
-[ext_resource path="res://World.cs" type="Script" id=1]
-[ext_resource path="res://Map.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Rooms/RoomG.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Rooms/RoomD.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://FloorBuilder.cs" type="Script" id=4]
+[ext_resource path="res://Cell.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Rooms/RoomF.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Rooms/RoomC.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Rooms/RoomH.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Rooms/RoomJ.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Rooms/RoomB.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Rooms/RoomA.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Rooms/RoomE.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Rooms/RoomI.tscn" type="PackedScene" id=13]
 
 [node name="World" type="Spatial"]
-script = ExtResource( 1 )
-Map = ExtResource( 2 )
+script = ExtResource( 4 )
+cellScene = ExtResource( 5 )
+roomPrefabs = [ ExtResource( 11 ), ExtResource( 10 ), ExtResource( 7 ), ExtResource( 2 ), ExtResource( 12 ), ExtResource( 6 ), ExtResource( 1 ), ExtResource( 8 ), ExtResource( 13 ), ExtResource( 9 ) ]
+maxRooms = 10
+playerScene = ExtResource( 3 )
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0 )
 
 [node name="FloorBuilder" type="Spatial" parent="."]
-script = ExtResource( 4 )
