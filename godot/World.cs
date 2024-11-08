@@ -20,17 +20,17 @@ public class World : Spatial
 		environment.DofBlurFarEnabled = true;
 		environment.DofBlurNearEnabled = true;
 		
-		GenerateMap(); 
+		GenerateMap("DevRoom"); 
 	}
 	 
-	private void GenerateMap()
+	private void GenerateMap(string i)//need to specify the tilemap but only if it is related to the Map node
 	{
 		if (Map == null) return;
 		
 		var mapInstance = Map.Instance(); 
 		AddChild(mapInstance);
 		var mapScript = mapInstance as Map;
-		var tileMap = mapScript.GetTileMap(); 
+		var tileMap = mapScript.GetTileMap(i); 
 		Array<Vector2> usedTiles = new Array<Vector2>();
 		foreach (var vector in tileMap.GetUsedCells())
 		{
