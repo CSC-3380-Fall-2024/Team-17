@@ -23,7 +23,31 @@ public class Player : Spatial
 
 		timerprocessor.Connect("timeout", this, nameof(OnTimerTimeout));
 	}
+	
+	  public override void _Input(InputEvent @event)
+	{
+		if (@event is InputEventMouseButton mouseEvent && IsLeftClick(mouseEvent))
+		{
+			CheckForInteractableInFront();
+		}
+	}
 
+	private bool IsLeftClick(InputEventMouseButton mouseEvent)
+	{
+		return mouseEvent.Pressed && mouseEvent.ButtonIndex == (int)ButtonList.Left;
+	}
+
+	private void CheckForInteractableInFront()
+	{
+		if (!forward.IsColliding()) return;
+
+		var collider = forward.GetCollider();
+		if (collider is Node interactableNode && interactableNode.HasMethod("OnInteract"))
+		{
+			interactableNode.Call("OnInteract");
+		}
+	}
+	
 	private bool CollisionCheck(RayCast direction)
 	{
 		if (direction != null)
