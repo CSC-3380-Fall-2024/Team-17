@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Cell.cs" type="Script" id=1]
+[ext_resource path="res://StoneWall.obj" type="ArrayMesh" id=2]
 [ext_resource path="res://StoneFloor.tres" type="Material" id=4]
 [ext_resource path="res://StoneWall.tres" type="Material" id=5]
 
@@ -35,8 +36,11 @@ surfaces/0 = {
 }
 
 [sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.358511, 0.389095, 0.383767 )
 
 [node name="Cell" type="Area"]
+collision_layer = 4
+collision_mask = 4
 script = ExtResource( 1 )
 
 [node name="TopFace" type="MeshInstance" parent="."]
@@ -55,7 +59,7 @@ mesh = SubResource( 2 )
 
 [node name="SouthFace" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1, 1 )
-mesh = SubResource( 2 )
+mesh = ExtResource( 2 )
 
 [node name="WestFace" type="MeshInstance" parent="."]
 transform = Transform( -4.37114e-08, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1, 4.37114e-08, 1.91069e-15, -1, 1, 0 )
@@ -65,5 +69,5 @@ mesh = SubResource( 2 )
 mesh = SubResource( 3 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.00531292 )
 shape = SubResource( 1 )
