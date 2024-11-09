@@ -29,7 +29,7 @@ public class FloorBuilder : Node
 		var cellPositionsArray = new Godot.Collections.Array<Vector2>(cellPositions);
 		foreach (var cell in cellInstances)
 		{
-			cell.UpdateFaces(cellPositionsArray);
+			UpdateAllCells();
 		}
 
 		

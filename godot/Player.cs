@@ -39,7 +39,7 @@ public class Player : Spatial
 
 	private void CheckForInteractableInFront()
 	{
-		if (!forward.IsColliding()) return;
+		if (!CollisionCheck(forward)) return;
 
 		var collider = forward.GetCollider();
 		if (collider is Node interactableNode && interactableNode.HasMethod("OnInteract"))
@@ -55,19 +55,6 @@ public class Player : Spatial
 			return direction.IsColliding();
 		}
 		return false;
-	}
-
-	private Vector3 GetDirection(RayCast direction)
-	{
-		if (direction is RayCast && direction.IsColliding())
-		{
-			var collider = direction.GetCollider() as Spatial;
-			if (collider != null)
-			{
-				return collider.GlobalTransform.origin - GlobalTransform.origin;
-			}
-		}
-		return Vector3.Zero;
 	}
 
 	private async Task TweenTranslation(Vector3 change)
@@ -100,10 +87,9 @@ public class Player : Spatial
 		bool turnQ = Input.IsActionPressed("turn_left");
 		bool turnE = Input.IsActionPressed("turn_right");
 
-		RayCast rayDir = null;
 		Vector3 movementDirection = Vector3.Zero;
 		int turnDir = (turnQ ? 1 : 0) - (turnE ? 1 : 0);
-		float tileSize = Globals.GRID_SIZE;
+		//float tileSize = Globals.GRID_SIZE; unused
 
 		if (goW) movementDirection += -GlobalTransform.basis.z * Globals.GRID_SIZE;
 		else if (goS) movementDirection += GlobalTransform.basis.z * Globals.GRID_SIZE;
@@ -118,11 +104,41 @@ public class Player : Spatial
 
 		if (movementDirection != Vector3.Zero)
 		{
-			if (!CollisionCheck(rayDir))
+			if(goW)//checks button to see if pressed and if so then does a collision check
 			{
-				timerprocessor.Stop();
-				await TweenTranslation(movementDirection);
-				timerprocessor.Start();
+				if (CollisionCheck(forward))
+				{
+					timerprocessor.Stop();
+					await TweenTranslation(movementDirection);
+					timerprocessor.Start();
+				}
+			}
+			else if(goS)
+			{
+				if (CollisionCheck(back))
+				{
+					timerprocessor.Stop();
+					await TweenTranslation(movementDirection);
+					timerprocessor.Start();
+				}
+			}
+			else if(goA)
+			{
+				if (CollisionCheck(left))
+				{
+					timerprocessor.Stop();
+					await TweenTranslation(movementDirection);
+					timerprocessor.Start();
+				}
+			}
+			else if (goD)
+			{
+				if (CollisionCheck(right))
+				{
+					timerprocessor.Stop();
+					await TweenTranslation(movementDirection);
+					timerprocessor.Start();
+				}
 			}
 		}
 	}
