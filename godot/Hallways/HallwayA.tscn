@@ -27,7 +27,7 @@
 
 [node name="HallwayA" type="Node2D"]
 
-[node name="TileMap" type="TileMap" parent="."]
+[node name="hall1" type="TileMap" parent="."]
 tile_set = SubResource( 1 )
 cell_size = Vector2( 32, 32 )
 cell_quadrant_size = 32
