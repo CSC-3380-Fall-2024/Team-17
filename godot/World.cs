@@ -14,7 +14,7 @@ public class World : Spatial
 	public override void _Ready()
 	{
 		var environment = GetTree().Root.World.FallbackEnvironment as Godot.Environment;
-		if (environment != null)
+		if (environment != 	null)
 		environment.BackgroundColor = new Color(0, 0, 0); 
 		environment.AmbientLightColor = new Color(0.263f, 0.176f, 0.427f); 
 		environment.DofBlurFarEnabled = true;

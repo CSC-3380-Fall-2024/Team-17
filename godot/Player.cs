@@ -50,7 +50,7 @@ public class Player : Spatial
 	
 	private bool CollisionCheck(RayCast direction)
 	{
-		if (direction != null)
+	if (direction != null)
 		{
 			return direction.IsColliding();
 		}

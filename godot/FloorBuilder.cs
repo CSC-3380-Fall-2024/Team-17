@@ -1,61 +1,34 @@
 using Godot;
+using Godot.Collections;
 using System;
 using System.Collections.Generic;
 
-public class FloorBuilder : Node
+public class FloorBuilder : Spatial
 {
-	[Export] private PackedScene cellScene;
-	[Export] private PackedScene[] roomPrefabs;
-	[Export] private int maxRooms = 5;
-	[Export] private int gridWidth = 20;
-	[Export] private int gridHeight = 20;
-	[Export] private PackedScene playerScene;
-	private Spatial player;
+	[Export]
+	public PackedScene Map; // The main map scene to generate the level
 
-	private RandomNumberGenerator rng = new RandomNumberGenerator();
-	private HashSet<Vector2> occupiedPositions = new HashSet<Vector2>();
-	private List<Cell> cellInstances = new List<Cell>();
-	private List<Vector2> cellPositions = new List<Vector2>();
+	[Export]
+	public Array<PackedScene> Rooms; // Array of available room scenes
 
+	[Export]
+	public Array<PackedScene> Hallways; // Array of available hallway scenes
+
+	[Export]
+	public int MaxRooms = 5; // Maximum number of rooms allowed to spawn
+
+	private int roomsSpawned = 0; // Tracks the number of rooms spawned
+	private List<Cell> cells = new List<Cell>(); // List to store generated cells
+	private TileMap tileMap; // The tile map to place cells on
+	private Random random = new Random(); // Random number generator for placement
+
+	// Called when the node is added to the scene tree
 	public override void _Ready()
 	{
-		rng.Randomize();
-		ConfigureEnvironment();
+		// Seed the random number generator for map generation
+		GD.Randomize();
 
-		Vector2 startPosition = Vector2.Zero;
-		GenerateDungeon(startPosition);
-		
-		SpawnPlayer(startPosition);
-		var cellPositionsArray = new Godot.Collections.Array<Vector2>(cellPositions);
-		foreach (var cell in cellInstances)
-		{
-			UpdateAllCells();
-		}
-
-		
-	}
-
-	void SpawnPlayer(Vector2 startPosition)
-	{
-		if (playerScene == null)
-		{
-			GD.PrintErr("Player scene is not assigned.");
-			return;
-		}
-
-		player = playerScene.Instance() as Spatial;
-		if (player == null)
-		{
-			GD.PrintErr("Failed to instantiate player. Ensure the root node of 'playerScene' is Spatial.");
-			return;
-		}
-
-		player.Translation = new Vector3(startPosition.x * 64, 0, startPosition.y * 64);
-		AddChild(player);
-	}
-
-	void ConfigureEnvironment()
-	{
+		// Set the environment background and lighting
 		var environment = GetTree().Root.World.FallbackEnvironment as Godot.Environment;
 		if (environment != null)
 		{
@@ -64,200 +37,198 @@ public class FloorBuilder : Node
 			environment.DofBlurFarEnabled = true;
 			environment.DofBlurNearEnabled = true;
 		}
+
+		// Start generating the map with a specified map creator
+		GenerateMap("MapCreator");
 	}
 
-	Vector2 GetPlayerPosition()
+	// Generates the initial map by placing the first room and hallways
+	private void GenerateMap(string i)
 	{
-		var player = GetNode<Node2D>("res://Player.tscn");
-		if (player != null)
+		if (Map == null) return;
+
+		// Instance the map and attach it to the scene
+		var mapInstance = Map.Instance();
+		AddChild(mapInstance);
+		var mapScript = mapInstance as Map;
+
+		// Get the tile map from the map instance
+		tileMap = mapScript.GetTileMap(i);
+		if (tileMap == null)
 		{
-			float tileSize = 1.0f;
-			return new Vector2(
-				Mathf.Floor(player.Position.x / tileSize),
-				Mathf.Floor(player.Position.y / tileSize)
-			);
+			GD.PrintErr("TileMap not found in Map node.");
+			mapInstance.QueueFree();
+			return;
 		}
-		return new Vector2(gridWidth / 2, gridHeight / 2);
+
+		Array<Vector2> usedTiles = new Array<Vector2>();
+		GenerateInitialRoom(); // Generate the first room
+
+		// Add used cells from tileMap to usedTiles array for later reference
+		foreach (var vector in tileMap.GetUsedCells())
+		{
+			usedTiles.Add((Vector2)vector);
+		}
+
+		// Create cells at each tile position in usedTiles and add to the scene
+		foreach (Vector2 tile in usedTiles)
+		{
+			var cell = (Cell)GD.Load<PackedScene>("res://Cell.tscn").Instance();
+			AddChild(cell);
+			cell.Translation = new Vector3(tile.x * Globals.GRID_SIZE, 0, tile.y * Globals.GRID_SIZE);
+			cells.Add(cell);
+		}
+
+		// Update faces for each cell based on usedTiles for collision/visuals
+		foreach (var cell in cells)
+		{
+			cell.UpdateFaces(usedTiles);
+		}
+
+		// Clean up the initial map instance
+		mapInstance.QueueFree();
 	}
 
-	void GenerateDungeon(Vector2 startPosition)
+	// Generates the initial room and places the first hallway leading from it
+	private void GenerateInitialRoom()
 	{
-		Vector2 startRoomSize = PlaceRoom(startPosition);
-		int roomsCreated = 1;
-		Queue<Tuple<Vector2, Vector2>> expansionPoints = new Queue<Tuple<Vector2, Vector2>>();
-		expansionPoints.Enqueue(new Tuple<Vector2, Vector2>(startPosition, startRoomSize));
+		HashSet<Vector2> occupiedPositions = new HashSet<Vector2>();
 
-		while (roomsCreated < maxRooms && expansionPoints.Count > 0)
+		// Place the initial room if below maximum room count
+		if (roomsSpawned < MaxRooms)
 		{
-			var (currentPos, currentRoomSize) = expansionPoints.Dequeue();
-			foreach (Vector2 direction in GetRandomDirections())
+			var roomScene = Rooms[(int)GD.RandRange(0, Rooms.Count)];
+			var roomInstance = roomScene.Instance();
+
+			// Get the TileMap for the room instance
+			var roomTileMap = roomInstance as TileMap ?? roomInstance.GetNode<TileMap>("TileMap");
+
+			if (roomTileMap == null)
 			{
-				Vector2 roomExitPosition = GetExitPosition(currentPos, currentRoomSize, direction);
-				Vector2 newRoomPosition = roomExitPosition + direction * 5;
-				if (!IsWithinBounds(newRoomPosition) || !IsAreaFree(newRoomPosition, new Vector2(5, 5)))
-					continue;
-				if (roomsCreated < maxRooms && rng.Randf() < 1f)
+				GD.PrintErr($"TileMap not found in {roomScene.ResourcePath}");
+				roomInstance.QueueFree();
+				return;
+			}
+
+			// Random position for the initial room
+			Vector2 roomPosition = new Vector2((int)GD.RandRange(0, 10), (int)GD.RandRange(0, 10));
+			foreach (Vector2 roomCell in roomTileMap.GetUsedCells())
+			{
+				var globalPosition = roomPosition + roomCell;
+				tileMap.SetCellv(globalPosition, roomTileMap.GetCellv(roomCell));
+				occupiedPositions.Add(globalPosition);
+			}
+			roomInstance.QueueFree();
+			roomsSpawned++;
+
+			// Start the first hallway from this initial room
+			PlaceHallwayAndNewRoom(roomPosition, roomTileMap, Hallways, Rooms, occupiedPositions);
+		}
+	}
+
+	// Places a hallway connected to the starting room and a new room at the end of the hallway
+	private void PlaceHallwayAndNewRoom(Vector2 startingRoomPosition, TileMap roomTileMap, Array<PackedScene> hallwayScenes, Array<PackedScene> roomScenes, HashSet<Vector2> occupiedPositions)
+	{
+		if (roomsSpawned >= MaxRooms) return;
+
+		// Define potential exit points for hallways around the room
+		var edgePositions = new Vector2[]
+		{
+			startingRoomPosition + new Vector2(roomTileMap.GetUsedRect().Size.x + 1, 0), // Right
+			startingRoomPosition + new Vector2(-1, 0),                                  // Left
+			startingRoomPosition + new Vector2(0, roomTileMap.GetUsedRect().Size.y + 1), // Bottom
+			startingRoomPosition + new Vector2(0, -1)                                    // Top
+		};
+
+		foreach (Vector2 edgePosition in edgePositions)
+		{
+			if (!occupiedPositions.Contains(edgePosition))
+			{
+				// Randomly select a hallway and instance it
+				var hallwayScene = hallwayScenes[(int)GD.RandRange(0, hallwayScenes.Count)];
+				var hallwayInstance = hallwayScene.Instance() as Node2D;
+
+				var hallwayTileMap = hallwayInstance.GetNode<TileMap>("TileMap");
+
+				if (hallwayTileMap == null)
 				{
-					Vector2 newRoomSize = PlaceRoom(newRoomPosition);
-					roomsCreated++;
-					expansionPoints.Enqueue(new Tuple<Vector2, Vector2>(newRoomPosition, newRoomSize));
-					GD.Print($"Room added at {newRoomPosition}");
-					DrawConnection(roomExitPosition, newRoomPosition);
+					GD.PrintErr($"TileMap not found in {hallwayScene.ResourcePath}");
+					hallwayInstance.QueueFree();
+					continue;
 				}
+
+				// Apply a random rotation (0, 90, 180, 270 degrees) to align hallway
+				int rotationDegrees = ((int)GD.RandRange(0, 4)) * 90;
+				hallwayInstance.RotationDegrees = rotationDegrees;
+
+				// Calculate hallway cell positions based on rotation
+				foreach (Vector2 hallwayCell in hallwayTileMap.GetUsedCells())
+				{
+					Vector2 rotatedPosition = RotateVector(hallwayCell, rotationDegrees);
+					var globalPosition = edgePosition + rotatedPosition;
+					if (!occupiedPositions.Contains(globalPosition))
+					{
+						tileMap.SetCellv(globalPosition, hallwayTileMap.GetCellv(hallwayCell));
+						occupiedPositions.Add(globalPosition);
+					}
+				}
+				AddChild(hallwayInstance);
+
+				// Place a new room at the end of the rotated hallway
+				PlaceNewRoomAtHallwayEnd(edgePosition + RotateVector(hallwayTileMap.GetUsedRect().Size, rotationDegrees), roomScenes, occupiedPositions);
+				break; // Exit after placing one hallway to connect to one new room
 			}
 		}
-		var cellPositionsArray = new Godot.Collections.Array<Vector2>(cellPositions);
-		foreach (var cell in cellInstances)
-		{
-			cell.UpdateFaces(cellPositionsArray);
-		}
-		GD.Print($"Rooms created: {roomsCreated}");
 	}
 
-	Vector2 PlaceRoom(Vector2 position)
+	// Helper function to rotate a Vector2 by specified degrees (90, 180, 270)
+	private Vector2 RotateVector(Vector2 vector, int degrees)
 	{
-		PackedScene roomPrefab = roomPrefabs[rng.RandiRange(0, roomPrefabs.Length - 1)];
-		TileMap roomTileMap = roomPrefab.Instance() as TileMap;
+		switch (degrees)
+		{
+			case 90:
+				return new Vector2(-vector.y, vector.x);
+			case 180:
+				return new Vector2(-vector.x, -vector.y);
+			case 270:
+				return new Vector2(vector.y, -vector.x);
+			default:
+				return vector; // 0 degrees, no rotation
+		}
+	}
+
+	// Places a new room at the end of a hallway, connecting it to the layout
+	private void PlaceNewRoomAtHallwayEnd(Vector2 position, Array<PackedScene> roomScenes, HashSet<Vector2> occupiedPositions)
+	{
+		if (roomsSpawned >= MaxRooms) return;
+
+		// Select a random room from available room scenes
+		var roomScene = roomScenes[(int)GD.RandRange(0, roomScenes.Count)];
+		var roomInstance = roomScene.Instance();
+
+		var roomTileMap = roomInstance as TileMap ?? roomInstance.GetNode<TileMap>("TileMap");
 
 		if (roomTileMap == null)
 		{
-			GD.PrintErr("The room prefab is not a TileMap. Ensure all roomPrefabs are of type TileMap.");
-			return Vector2.Zero;
+			GD.PrintErr($"TileMap not found in {roomScene.ResourcePath}");
+			roomInstance.QueueFree();
+			return;
 		}
 
-		AddChild(roomTileMap);
-		Rect2 usedRect = roomTileMap.GetUsedRect();
-		Vector2 roomSize = usedRect.Size;
-		float cellSize = 1.0f;
-		Vector2 worldPosition = position - (roomSize * cellSize * 1f);
-		roomTileMap.Position = worldPosition;
-		MarkAreaOccupied(position, roomSize);
-		ConvertTileMapTo3D(roomTileMap, position);
-		return roomSize;
-	}
-
-	void DrawConnection(Vector2 start, Vector2 end)
-	{
-		Vector2 currentPosition = start;
-		Vector2 direction = (end - start).Normalized();
-		while (currentPosition.DistanceTo(end) > 1.0f)
+		// Place room cells at the specified position if they’re not occupied
+		foreach (Vector2 roomCell in roomTileMap.GetUsedCells())
 		{
-			if (!occupiedPositions.Contains(currentPosition))
+			var globalPosition = position + roomCell;
+			if (!occupiedPositions.Contains(globalPosition))
 			{
-				PlaceConnectionCell(currentPosition);
-				occupiedPositions.Add(currentPosition);
-			}
-			currentPosition += direction;
-		}
-	}
-
-	void PlaceConnectionCell(Vector2 position)
-	{
-		if (cellScene != null)
-		{
-			var cellInstance = cellScene.Instance() as Cell;
-			if (cellInstance == null)
-			{
-				GD.PrintErr("The cellScene prefab is not a Cell. Ensure cellScene is of type Cell.");
-				return;
-			}
-			cellInstance.Translation = new Vector3(position.x, 0, position.y);
-			AddChild(cellInstance);
-			cellInstances.Add(cellInstance);
-			cellPositions.Add(position);
-		}
-	}
-
-	void ConvertTileMapTo3D(TileMap tileMap, Vector2 gridPosition)
-	{
-		Vector2 mapSize = tileMap.GetUsedRect().Size;
-		Vector3 offset = new Vector3(gridPosition.x, 0, gridPosition.y);
-		float cellSize = 1.0f;
-
-		for (int x = 0; x < mapSize.x; x++)
-		{
-			for (int y = 0; y < mapSize.y; y++)
-			{
-				Vector2 cellPos = new Vector2(x, y);
-				int tileId = tileMap.GetCellv(cellPos);
-
-				if (tileId != -1)
-				{
-					Vector3 position = offset + new Vector3(cellPos.x * cellSize, 0, cellPos.y * cellSize);
-					if (cellScene != null)
-					{
-						var cellInstance = cellScene.Instance() as Cell;
-						if (cellInstance == null)
-						{
-							GD.PrintErr("The cellScene prefab is not a Cell. Ensure cellScene is of type Cell.");
-							continue;
-						}
-						cellInstance.Translation = position;
-						AddChild(cellInstance);
-						cellInstances.Add(cellInstance);
-						cellPositions.Add(new Vector2(gridPosition.x + cellPos.x, gridPosition.y + cellPos.y));
-					}
-				}
+				tileMap.SetCellv(globalPosition, roomTileMap.GetCellv(roomCell));
+				occupiedPositions.Add(globalPosition);
 			}
 		}
-		tileMap.QueueFree();
-	}
+		roomInstance.QueueFree();
+		roomsSpawned++;
 
-	void UpdateAllCells()
-	{
-		var cellPositionsArray = new Godot.Collections.Array<Vector2>(cellPositions);
-		foreach (var cell in cellInstances)
-		{
-			cell.UpdateFaces(cellPositionsArray);
-		}
-	}
-
-	List<Vector2> GetRandomDirections()
-	{
-		List<Vector2> directions = new List<Vector2> { Vector2.Up, Vector2.Down, Vector2.Left, Vector2.Right };
-		for (int i = 0; i < directions.Count; i++)
-		{
-			int j = rng.RandiRange(0, directions.Count - 1);
-			var temp = directions[i];
-			directions[i] = directions[j];
-			directions[j] = temp;
-		}
-		return directions;
-	}
-
-	bool IsWithinBounds(Vector2 position)
-	{
-		return position.x >= 0 && position.x < gridWidth &&
-			   position.y >= 0 && position.y < gridHeight;
-	}
-
-	bool IsAreaFree(Vector2 startPosition, Vector2 size)
-	{
-		for (int x = 0; x < size.x; x++)
-		{
-			for (int y = 0; y < size.y; y++)
-			{
-				Vector2 pos = startPosition + new Vector2(x, y);
-				if (occupiedPositions.Contains(pos))
-					return false;
-			}
-		}
-		return true;
-	}
-
-	void MarkAreaOccupied(Vector2 startPosition, Vector2 size)
-	{
-		for (int x = 0; x < size.x; x++)
-		{
-			for (int y = 0; y < size.y; y++)
-			{
-				occupiedPositions.Add(startPosition + new Vector2(x, y));
-			}
-		}
-	}
-
-	Vector2 GetExitPosition(Vector2 roomPosition, Vector2 roomSize, Vector2 direction)
-	{
-		return roomPosition + (roomSize * 1f) * direction;
+		// Extend the layout by placing additional hallways from the new room
+		PlaceHallwayAndNewRoom(position, roomTileMap, Hallways, Rooms, occupiedPositions);
 	}
 }

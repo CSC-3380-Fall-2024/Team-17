@@ -45,6 +45,7 @@ public class Cell : Area
 	{
 		// Get grid position
 		Vector2 myGridPosition = new Vector2(Translation.x / Globals.GRID_SIZE, Translation.z / 2);
+	
 
 		// Hide specific faces based on neighbors
 		if (cellList.Contains(myGridPosition + Vector2.Right))
