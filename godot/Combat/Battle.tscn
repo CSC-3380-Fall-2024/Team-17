@@ -87,15 +87,14 @@ margin_bottom = -90.0
 anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -156.0
-margin_right = 275.0
+margin_left = -46.0
+margin_top = 36.0
+margin_right = 256.0
 alignment = 1
 
 [node name="ProgressBar" type="ProgressBar" parent="PartyPanel/PlayerData"]
-margin_left = 131.0
-margin_top = 47.0
-margin_right = 419.0
-margin_bottom = 63.0
+margin_right = 302.0
+margin_bottom = 16.0
 rect_min_size = Vector2( 0, 16 )
 size_flags_horizontal = 3
 custom_styles/fg = SubResource( 1 )
@@ -107,9 +106,8 @@ percent_visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = -89.0
-margin_top = -2.0
 margin_right = -89.0
-margin_bottom = 17.0
+margin_bottom = 19.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 4 )
 text = "50/100
@@ -130,7 +128,6 @@ margin_bottom = 106.0
 
 [node name="BattlePortrait1" type="TextureRect" parent="PartyPanel/Panel"]
 anchor_bottom = 1.0
-margin_top = -1.0
 margin_right = 121.0
 margin_bottom = 1.0
 texture = ExtResource( 4 )
