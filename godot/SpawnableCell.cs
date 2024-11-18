@@ -28,7 +28,7 @@ public class SpawnableCell : Spatial
 	private void SpawnObject()
 	{
 		// Load the interactable object scene
-		PackedScene interactableScene = (PackedScene)ResourceLoader.Load("res://Interactable.tscn");
+		PackedScene interactableScene = (PackedScene)ResourceLoader.Load("res://InteractableA.tscn");
 
 		if (interactableScene != null)
 		{
