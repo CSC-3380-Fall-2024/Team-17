@@ -50,6 +50,9 @@ border_color = Color( 1, 1, 1, 1 )
 [node name="Battle" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
 [node name="Background" type="TextureRect" parent="."]
 margin_top = -2.0
@@ -57,6 +60,9 @@ margin_right = 1024.0
 margin_bottom = 408.0
 texture = ExtResource( 2 )
 expand = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchor_left = 0.5
@@ -65,6 +71,9 @@ margin_left = -128.0
 margin_top = 107.0
 margin_right = 128.0
 margin_bottom = 381.0
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
 [node name="Enemy" type="TextureRect" parent="VBoxContainer"]
 margin_right = 256.0
@@ -90,14 +99,99 @@ custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 4 )
 text = "50/100
 "
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
-[node name="PartyPanel2" type="Panel" parent="."]
-anchor_left = 1.0
+[node name="PartyPanel1" type="Panel" parent="."]
 anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -192.0
+margin_right = 512.0
+margin_bottom = -96.0
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="PlayerData" type="HBoxContainer" parent="PartyPanel1"]
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -46.0
+margin_top = 36.0
+margin_right = 256.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ProgressBar" type="ProgressBar" parent="PartyPanel1/PlayerData"]
+margin_right = 302.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 0, 16 )
+size_flags_horizontal = 3
+custom_styles/fg = SubResource( 1 )
+custom_styles/bg = SubResource( 2 )
+value = 50.0
+percent_visible = false
+
+[node name="Label" type="Label" parent="PartyPanel1/PlayerData/ProgressBar"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = -512.0
+margin_left = -81.0
+margin_right = -278.0
+margin_bottom = 19.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "50/100
+"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="NameCharacter1" type="Label" parent="PartyPanel1"]
+margin_left = 316.0
+margin_top = 9.0
+margin_right = 376.0
+margin_bottom = 21.0
+custom_fonts/font = SubResource( 5 )
+text = "PARTY 1
+
+"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Panel" type="Panel" parent="PartyPanel1"]
+margin_top = 1.0
+margin_right = 106.0
+margin_bottom = 92.0
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="BattlePortrait1" type="TextureRect" parent="PartyPanel1/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -1.0
+margin_right = 3.0
+margin_bottom = 4.0
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="PartyPanel2" type="Panel" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
 margin_top = -96.0
+margin_right = 512.0
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
 [node name="PlayerData" type="HBoxContainer" parent="PartyPanel2"]
 anchor_left = 0.5
@@ -107,9 +201,12 @@ margin_left = -46.0
 margin_top = 36.0
 margin_right = 256.0
 alignment = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
 [node name="ProgressBar" type="ProgressBar" parent="PartyPanel2/PlayerData"]
-margin_right = 280.0
+margin_right = 302.0
 margin_bottom = 16.0
 rect_min_size = Vector2( 0, 16 )
 size_flags_horizontal = 3
@@ -128,22 +225,31 @@ custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 4 )
 text = "50/100
 "
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
-[node name="NameCharacter1" type="Label" parent="PartyPanel2"]
+[node name="NameCharacter2" type="Label" parent="PartyPanel2"]
 margin_left = 316.0
 margin_top = 9.0
 margin_right = 376.0
 margin_bottom = 21.0
 custom_fonts/font = SubResource( 5 )
-text = "PARTY 1"
+text = "PARTY 2"
 valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
 [node name="Panel" type="Panel" parent="PartyPanel2"]
 margin_top = 1.0
 margin_right = 106.0
 margin_bottom = 92.0
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
-[node name="BattlePortrait1" type="TextureRect" parent="PartyPanel2/Panel"]
+[node name="BattlePortrait2" type="TextureRect" parent="PartyPanel2/Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -1.0
@@ -152,127 +258,9 @@ margin_bottom = 4.0
 texture = ExtResource( 4 )
 expand = true
 stretch_mode = 2
-
-[node name="PartyPanel4" type="Panel" parent="."]
-anchor_top = 1.0
-anchor_bottom = 1.0
-margin_top = -96.0
-margin_right = 512.0
-
-[node name="PlayerData" type="HBoxContainer" parent="PartyPanel4"]
-anchor_left = 0.5
-anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -46.0
-margin_top = 36.0
-margin_right = 256.0
-alignment = 1
-
-[node name="ProgressBar" type="ProgressBar" parent="PartyPanel4/PlayerData"]
-margin_right = 280.0
-margin_bottom = 16.0
-rect_min_size = Vector2( 0, 16 )
-size_flags_horizontal = 3
-custom_styles/fg = SubResource( 1 )
-custom_styles/bg = SubResource( 2 )
-value = 50.0
-percent_visible = false
-
-[node name="Label" type="Label" parent="PartyPanel4/PlayerData/ProgressBar"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -81.0
-margin_right = -278.0
-margin_bottom = 19.0
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
-text = "50/100
-"
-
-[node name="NameCharacter1" type="Label" parent="PartyPanel4"]
-margin_left = 316.0
-margin_top = 9.0
-margin_right = 376.0
-margin_bottom = 21.0
-custom_fonts/font = SubResource( 5 )
-text = "PARTY 1"
-valign = 1
-
-[node name="Panel" type="Panel" parent="PartyPanel4"]
-margin_top = 1.0
-margin_right = 106.0
-margin_bottom = 92.0
-
-[node name="BattlePortrait1" type="TextureRect" parent="PartyPanel4/Panel"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = -1.0
-margin_right = 3.0
-margin_bottom = 4.0
-texture = ExtResource( 4 )
-expand = true
-stretch_mode = 2
-
-[node name="PartyPanel5" type="Panel" parent="."]
-anchor_top = 1.0
-anchor_bottom = 1.0
-margin_top = -192.0
-margin_right = 512.0
-margin_bottom = -96.0
-
-[node name="PlayerData" type="HBoxContainer" parent="PartyPanel5"]
-anchor_left = 0.5
-anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -46.0
-margin_top = 36.0
-margin_right = 256.0
-alignment = 1
-
-[node name="ProgressBar" type="ProgressBar" parent="PartyPanel5/PlayerData"]
-margin_right = 280.0
-margin_bottom = 16.0
-rect_min_size = Vector2( 0, 16 )
-size_flags_horizontal = 3
-custom_styles/fg = SubResource( 1 )
-custom_styles/bg = SubResource( 2 )
-value = 50.0
-percent_visible = false
-
-[node name="Label" type="Label" parent="PartyPanel5/PlayerData/ProgressBar"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -81.0
-margin_right = -278.0
-margin_bottom = 19.0
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 4 )
-text = "50/100
-"
-
-[node name="NameCharacter1" type="Label" parent="PartyPanel5"]
-margin_left = 316.0
-margin_top = 9.0
-margin_right = 376.0
-margin_bottom = 21.0
-custom_fonts/font = SubResource( 5 )
-text = "PARTY 1"
-valign = 1
-
-[node name="Panel" type="Panel" parent="PartyPanel5"]
-margin_top = 1.0
-margin_right = 106.0
-margin_bottom = 92.0
-
-[node name="BattlePortrait1" type="TextureRect" parent="PartyPanel5/Panel"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = -1.0
-margin_right = 3.0
-margin_bottom = 4.0
-texture = ExtResource( 4 )
-expand = true
-stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
 [node name="PartyPanel3" type="Panel" parent="."]
 anchor_left = 1.0
@@ -282,6 +270,9 @@ anchor_bottom = 1.0
 margin_left = -512.0
 margin_top = -192.0
 margin_bottom = -96.0
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
 [node name="PlayerData" type="HBoxContainer" parent="PartyPanel3"]
 anchor_left = 0.5
@@ -291,9 +282,12 @@ margin_left = -46.0
 margin_top = 36.0
 margin_right = 256.0
 alignment = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
 [node name="ProgressBar" type="ProgressBar" parent="PartyPanel3/PlayerData"]
-margin_right = 280.0
+margin_right = 302.0
 margin_bottom = 16.0
 rect_min_size = Vector2( 0, 16 )
 size_flags_horizontal = 3
@@ -312,22 +306,31 @@ custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 4 )
 text = "50/100
 "
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
-[node name="NameCharacter1" type="Label" parent="PartyPanel3"]
+[node name="NameCharacter3" type="Label" parent="PartyPanel3"]
 margin_left = 316.0
 margin_top = 9.0
 margin_right = 376.0
 margin_bottom = 21.0
 custom_fonts/font = SubResource( 5 )
-text = "PARTY 1"
+text = "PARTY 3"
 valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
 [node name="Panel" type="Panel" parent="PartyPanel3"]
 margin_top = 1.0
 margin_right = 106.0
 margin_bottom = 92.0
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
-[node name="BattlePortrait1" type="TextureRect" parent="PartyPanel3/Panel"]
+[node name="BattlePortrait3" type="TextureRect" parent="PartyPanel3/Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_top = -1.0
@@ -336,12 +339,102 @@ margin_bottom = 4.0
 texture = ExtResource( 4 )
 expand = true
 stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="PartyPanel4" type="Panel" parent="."]
+unique_name_in_owner = true
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -512.0
+margin_top = -96.0
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="PlayerData" type="HBoxContainer" parent="PartyPanel4"]
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -46.0
+margin_top = 36.0
+margin_right = 256.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ProgressBar" type="ProgressBar" parent="PartyPanel4/PlayerData"]
+margin_right = 302.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 0, 16 )
+size_flags_horizontal = 3
+custom_styles/fg = SubResource( 1 )
+custom_styles/bg = SubResource( 2 )
+value = 50.0
+percent_visible = false
+
+[node name="Label" type="Label" parent="PartyPanel4/PlayerData/ProgressBar"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -81.0
+margin_right = -278.0
+margin_bottom = 19.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 4 )
+text = "50/100
+"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="NameCharacter4" type="Label" parent="PartyPanel4"]
+margin_left = 316.0
+margin_top = 9.0
+margin_right = 376.0
+margin_bottom = 21.0
+custom_fonts/font = SubResource( 5 )
+text = "PARTY 4"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Panel" type="Panel" parent="PartyPanel4"]
+margin_top = 1.0
+margin_right = 106.0
+margin_bottom = 92.0
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="BattlePortrait4" type="TextureRect" parent="PartyPanel4/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -1.0
+margin_right = 3.0
+margin_bottom = 4.0
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
 [node name="Control" parent="." instance=ExtResource( 5 )]
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
 [node name="ActionsPanel" type="Panel" parent="Control"]
 margin_right = 184.0
 margin_bottom = 358.0
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
 [node name="Actions" type="VBoxContainer" parent="Control/ActionsPanel"]
 anchor_right = 1.0
@@ -352,6 +445,9 @@ margin_right = -6.0
 margin_bottom = -6.0
 custom_constants/separation = 6
 alignment = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
 
 [node name="Attack" type="Button" parent="Control/ActionsPanel/Actions"]
 margin_right = 172.0

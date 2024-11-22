@@ -18,6 +18,11 @@ config/icon="res://icon.png"
 
 Player="*res://Player.tscn"
 
+[display]
+
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
+
 [global]
 
 strecth=false
