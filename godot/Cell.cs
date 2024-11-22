@@ -11,8 +11,11 @@ public class Cell : Area
 	private MeshInstance westFace;
 	private MeshInstance bottomFace;
 	
-	[Export] public float spawnProbability = 0.2f;  // % of Spawn
- 	[Export] public PackedScene interactable;
+	[Export] public float spawnProbabilityA = 0.2f;
+	[Export] public float spawnProbabilityB = 0.2f;  // % of Spawn
+ 	[Export] public PackedScene interactableA;
+	[Export] public PackedScene interactableB;
+	
 	
 	 private static Random random = new Random();
 
@@ -30,17 +33,27 @@ public class Cell : Area
 	}
 
 	private void SpawnInteractable()
-{
-		// Generate a random value between 0 and 1, and spawn the interactable if within probability
-		if (random.NextDouble() < spawnProbability && interactable != null)
+	 {
+		// Spawn Interactable A
+		if (random.NextDouble() < spawnProbabilityA && interactableA != null)
 		{
-			Spatial interactableInstance = (Spatial)interactable.Instance();
-			AddChild(interactableInstance);
-			interactableInstance.Translation = new Vector3(0, 1, 0); // Adjust position as needed
+			SpawnInteractable(interactableA, new Vector3(0, 1, 0)); // Adjust position as needed
+		}
+
+		// Spawn Interactable B
+		if (random.NextDouble() < spawnProbabilityB && interactableB != null)
+		{
+			SpawnInteractable(interactableB, new Vector3(1, 1, 0)); // Adjust position as needed
 		}
 	}
 
-	
+	private void SpawnInteractable(PackedScene interactable, Vector3 position)
+	{
+		Spatial interactableInstance = (Spatial)interactable.Instance();
+		AddChild(interactableInstance);
+		interactableInstance.Translation = position;
+	}
+
 	public void UpdateFaces(Godot.Collections.Array<Vector2> cellList)
 	{
 		// Get grid position
