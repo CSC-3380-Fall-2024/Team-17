@@ -39,7 +39,6 @@ public class TextLogic : Control
 	{
 		// Show the ActionsPanel when the textbox is closed
 		GetNode<Control>("ActionsPanel").Show();
-		GD.Print("Textbox closed!"); 
 	}
 }
 
