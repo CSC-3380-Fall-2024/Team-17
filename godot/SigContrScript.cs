@@ -44,9 +44,10 @@ private void _on_Switch_pressed()
 	}
 	
 	private void _on_Run_pressed()
-{
+	{
 		_player.PerformRun();
-}
-	
+		// Change the scene to World.tscn
+		GetTree().ChangeScene("res://World.tscn");
+	}
 	
 }
