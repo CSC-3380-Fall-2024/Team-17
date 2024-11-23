@@ -5,6 +5,33 @@
 [ext_resource path="res://Assets/Textures/NESCyrillic.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://Assets/Textures/placeholder image.png" type="Texture" id=4]
 
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0, 0, 0, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="DynamicFont" id=10]
+size = 40
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 40
+font_data = ExtResource( 3 )
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0, 0, 0, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 1, 1, 1, 1 )
+
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.243137, 0.972549, 0.0666667, 1 )
 border_width_left = 1
@@ -31,39 +58,163 @@ font_data = SubResource( 3 )
 [sub_resource type="DynamicFont" id=5]
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=6]
-size = 40
-font_data = ExtResource( 3 )
-
-[sub_resource type="StyleBoxFlat" id=7]
-bg_color = Color( 1, 1, 1, 1 )
-
-[sub_resource type="StyleBoxFlat" id=8]
-bg_color = Color( 0, 0, 0, 1 )
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color( 1, 1, 1, 1 )
-
-[sub_resource type="StyleBoxFlat" id=9]
-bg_color = Color( 0, 0, 0, 1 )
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color( 1, 1, 1, 1 )
-
-[sub_resource type="DynamicFont" id=10]
-size = 40
-font_data = ExtResource( 3 )
-
 [node name="Battle" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
 "_edit_use_anchors_": true
 }
+
+[node name="Textbox" type="Panel" parent="."]
+anchor_right = 1.0
+margin_left = 8.0
+margin_top = 304.0
+margin_right = -8.0
+margin_bottom = 397.0
+custom_styles/panel = SubResource( 9 )
+
+[node name="Label" type="Label" parent="Textbox"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = -8.0
+margin_bottom = -8.0
+custom_fonts/font = SubResource( 10 )
+text = "Text goes here!"
+
+[node name="Ticker" type="Label" parent="Textbox"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -27.0
+margin_top = -38.0
+margin_right = -12.0
+margin_bottom = -8.0
+custom_fonts/font = SubResource( 10 )
+text = ">"
+
+[node name="ActionsPanel" type="Panel" parent="."]
+margin_right = 184.0
+margin_bottom = 358.0
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Actions" type="VBoxContainer" parent="ActionsPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 6.0
+margin_top = 6.0
+margin_right = -6.0
+margin_bottom = -6.0
+custom_constants/separation = 6
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Attack" type="Button" parent="ActionsPanel/Actions"]
+margin_right = 172.0
+margin_bottom = 52.0
+focus_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/icon_color_pressed = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 6 )
+custom_styles/hover = SubResource( 7 )
+custom_styles/pressed = SubResource( 7 )
+custom_styles/normal = SubResource( 8 )
+enabled_focus_mode = 0
+text = "attack"
+
+[node name="Skill" type="Button" parent="ActionsPanel/Actions"]
+margin_top = 58.0
+margin_right = 172.0
+margin_bottom = 111.0
+focus_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/icon_color_pressed = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 6 )
+custom_styles/hover = SubResource( 7 )
+custom_styles/pressed = SubResource( 7 )
+custom_styles/normal = SubResource( 8 )
+enabled_focus_mode = 0
+text = "SKILL"
+
+[node name="Defend" type="Button" parent="ActionsPanel/Actions"]
+margin_top = 117.0
+margin_right = 172.0
+margin_bottom = 170.0
+focus_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/icon_color_pressed = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 6 )
+custom_styles/hover = SubResource( 7 )
+custom_styles/pressed = SubResource( 7 )
+custom_styles/normal = SubResource( 8 )
+enabled_focus_mode = 0
+text = "DEFEND"
+
+[node name="Item" type="Button" parent="ActionsPanel/Actions"]
+margin_top = 176.0
+margin_right = 172.0
+margin_bottom = 228.0
+focus_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/icon_color_pressed = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 6 )
+custom_styles/hover = SubResource( 7 )
+custom_styles/pressed = SubResource( 7 )
+custom_styles/normal = SubResource( 8 )
+enabled_focus_mode = 0
+text = "ITEM"
+
+[node name="Switch" type="Button" parent="ActionsPanel/Actions"]
+margin_top = 234.0
+margin_right = 172.0
+margin_bottom = 287.0
+focus_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/icon_color_pressed = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 6 )
+custom_styles/hover = SubResource( 7 )
+custom_styles/pressed = SubResource( 7 )
+custom_styles/normal = SubResource( 8 )
+enabled_focus_mode = 0
+text = "SWITCH"
+
+[node name="Run" type="Button" parent="ActionsPanel/Actions"]
+margin_top = 293.0
+margin_right = 172.0
+margin_bottom = 346.0
+focus_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_colors/icon_color_pressed = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 6 )
+custom_styles/hover = SubResource( 7 )
+custom_styles/pressed = SubResource( 7 )
+custom_styles/normal = SubResource( 8 )
+enabled_focus_mode = 0
+text = "RUN"
 
 [node name="Background" type="TextureRect" parent="."]
 margin_top = -2.0
@@ -357,7 +508,6 @@ __meta__ = {
 }
 
 [node name="PartyPanel4" type="Panel" parent="."]
-unique_name_in_owner = true
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -436,154 +586,3 @@ stretch_mode = 2
 __meta__ = {
 "_edit_use_anchors_": true
 }
-
-[node name="ActionsPanel" type="Panel" parent="."]
-margin_right = 184.0
-margin_bottom = 358.0
-__meta__ = {
-"_edit_use_anchors_": true
-}
-
-[node name="Actions" type="VBoxContainer" parent="ActionsPanel"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 6.0
-margin_top = 6.0
-margin_right = -6.0
-margin_bottom = -6.0
-custom_constants/separation = 6
-alignment = 1
-__meta__ = {
-"_edit_use_anchors_": true
-}
-
-[node name="Attack" type="Button" parent="ActionsPanel/Actions"]
-margin_right = 172.0
-margin_bottom = 52.0
-focus_mode = 0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_colors/icon_color_pressed = Color( 0, 0, 0, 1 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 6 )
-custom_styles/hover = SubResource( 7 )
-custom_styles/pressed = SubResource( 7 )
-custom_styles/normal = SubResource( 8 )
-enabled_focus_mode = 0
-text = "attack"
-
-[node name="Skill" type="Button" parent="ActionsPanel/Actions"]
-margin_top = 58.0
-margin_right = 172.0
-margin_bottom = 111.0
-focus_mode = 0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_colors/icon_color_pressed = Color( 0, 0, 0, 1 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 6 )
-custom_styles/hover = SubResource( 7 )
-custom_styles/pressed = SubResource( 7 )
-custom_styles/normal = SubResource( 8 )
-enabled_focus_mode = 0
-text = "SKILL"
-
-[node name="Defend" type="Button" parent="ActionsPanel/Actions"]
-margin_top = 117.0
-margin_right = 172.0
-margin_bottom = 170.0
-focus_mode = 0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_colors/icon_color_pressed = Color( 0, 0, 0, 1 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 6 )
-custom_styles/hover = SubResource( 7 )
-custom_styles/pressed = SubResource( 7 )
-custom_styles/normal = SubResource( 8 )
-enabled_focus_mode = 0
-text = "DEFEND"
-
-[node name="Item" type="Button" parent="ActionsPanel/Actions"]
-margin_top = 176.0
-margin_right = 172.0
-margin_bottom = 228.0
-focus_mode = 0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_colors/icon_color_pressed = Color( 0, 0, 0, 1 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 6 )
-custom_styles/hover = SubResource( 7 )
-custom_styles/pressed = SubResource( 7 )
-custom_styles/normal = SubResource( 8 )
-enabled_focus_mode = 0
-text = "ITEM"
-
-[node name="Switch" type="Button" parent="ActionsPanel/Actions"]
-margin_top = 234.0
-margin_right = 172.0
-margin_bottom = 287.0
-focus_mode = 0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_colors/icon_color_pressed = Color( 0, 0, 0, 1 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 6 )
-custom_styles/hover = SubResource( 7 )
-custom_styles/pressed = SubResource( 7 )
-custom_styles/normal = SubResource( 8 )
-enabled_focus_mode = 0
-text = "SWITCH"
-
-[node name="Run" type="Button" parent="ActionsPanel/Actions"]
-margin_top = 293.0
-margin_right = 172.0
-margin_bottom = 346.0
-focus_mode = 0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_colors/icon_color_pressed = Color( 0, 0, 0, 1 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 6 )
-custom_styles/hover = SubResource( 7 )
-custom_styles/pressed = SubResource( 7 )
-custom_styles/normal = SubResource( 8 )
-enabled_focus_mode = 0
-text = "RUN"
-
-[node name="Textbox" type="Panel" parent="."]
-anchor_right = 1.0
-margin_left = 8.0
-margin_top = 304.0
-margin_right = -8.0
-margin_bottom = 397.0
-custom_styles/panel = SubResource( 9 )
-
-[node name="Label" type="Label" parent="Textbox"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 8.0
-margin_top = 8.0
-margin_right = -8.0
-margin_bottom = -8.0
-custom_fonts/font = SubResource( 10 )
-text = "Text goes here!"
-
-[node name="Ticker" type="Label" parent="Textbox"]
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -27.0
-margin_top = -38.0
-margin_right = -12.0
-margin_bottom = -8.0
-custom_fonts/font = SubResource( 10 )
-text = ">"
