@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class SigPlayer : Node2D
+public class SigEnemy : Node2D
 
 
 {
