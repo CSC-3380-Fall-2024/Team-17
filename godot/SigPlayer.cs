@@ -27,6 +27,7 @@ public class SigPlayer : Node2D
 	public void PerformAttack()
 	{
 		EmitSignal(nameof(Attack));
+		
 		GD.Print("Attack!");
 	}
 
