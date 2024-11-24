@@ -124,11 +124,13 @@ margin_left = 13.305
 margin_top = -72.207
 margin_right = 12.9111
 margin_bottom = -304.707
+custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_fonts/font = SubResource( 6 )
 text = "select a room"
 script = ExtResource( 4 )
 
 [node name="Back" type="Button" parent="RoomSelector"]
+visible = false
 margin_left = 469.0
 margin_top = 406.0
 margin_right = 671.0
