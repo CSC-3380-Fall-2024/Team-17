@@ -182,4 +182,17 @@ public class MapCreator : TileMap
 		}
 
 	}			
+
+	private List<Vector2> V2Rotate90(List<Vector2> list){
+		List<Vector2> rlist = list;
+		int XMax = 0;
+		foreach (Vector2 v in rlist){
+			if (v.x > XMax) XMax = (int)v.x;
+		}
+		for (int i = 0; i < rlist.Count; i++){
+			int swap = (int) rlist[i].x;
+			rlist[i] = new Vector2((-1) * rlist[i].y - XMax, rlist[i].x);
+		}
+		return rlist;
+	}
 }
