@@ -30,6 +30,9 @@ public class MapCreator : TileMap
 					new Vector2(0, 2), new Vector2(1,2), new Vector2(2,2),
 									   new Vector2(1,2)}
 					},
+				{"extendPoints", new List<Vector2>{new Vector2(1,-1)}
+
+				}
 
 				}
 
@@ -39,7 +42,10 @@ public class MapCreator : TileMap
 				{"tilePositions", new List<Vector2>{
 					new Vector2(0,0), new Vector2(0,1), new Vector2(0,2)
 				}
-			}
+			},
+				{"extendPoints", new List<Vector2>{new Vector2(0,-1)}
+
+				}
 			}
 			},
 			{2, new Godot.Collections.Dictionary{
@@ -47,7 +53,10 @@ public class MapCreator : TileMap
 					new Vector2(2,0), new Vector2(0,1), new Vector2(1,1), new Vector2(2,1), new Vector2(2,2), new Vector2(2,3)
 
 				}
-			}
+			},
+				{"extendPoints", new List<Vector2>{new Vector2(-1,1), new Vector2(2,-1)}
+
+				}
 			}
 			}
 			
@@ -87,6 +96,9 @@ public class MapCreator : TileMap
 					new Vector2(0, 4), new Vector2(1,4), new Vector2(2,4), new Vector2(3,4), new Vector2(4,4)
 					}
 					},
+				{"extendPoints", new List<Vector2>{new Vector2(2,5), new Vector2(5,2)}
+
+				}
 
 				}
 
@@ -98,7 +110,10 @@ public class MapCreator : TileMap
 					new Vector2(1,0), new Vector2(1,1), new Vector2(1,2),
 					new Vector2(2,0), new Vector2(2,1), new Vector2(2,2)
 				}
-			}
+			},
+				{"extendPoints", new List<Vector2>{new Vector2(1,3)}
+
+				}
 			}
 			},
 			{2, new Godot.Collections.Dictionary{
@@ -108,7 +123,10 @@ public class MapCreator : TileMap
 					new Vector2(2,0), new Vector2(2,1), new Vector2(2,2),
 					new Vector2(3,0), new Vector2(3,1), new Vector2(3,2)
 				}
-			}
+			},
+				{"extendPoints", new List<Vector2>{new Vector2(-1,3), new Vector2(3,1)}
+
+				}
 			}
 			}
 			
@@ -143,7 +161,7 @@ public class MapCreator : TileMap
 					new Vector2(0, 4), new Vector2(1,4), new Vector2(2,4), new Vector2(3,4), new Vector2(4,4)
 					}
 					},
-				{"extendPoints", new List<Vector2>{}
+				{"extendPoints", new List<Vector2>{new Vector2(2,-1), new Vector2(-1,-1), new Vector2(1,5)}
 
 				}
 				
@@ -152,33 +170,33 @@ public class MapCreator : TileMap
 			},
 			{1, new Godot.Collections.Dictionary{
 				{"tilePositions", new List<Vector2>{
-					
+														new Vector2(2,0),
+					new Vector2(1,1), new Vector2(2,1), new Vector2(3,1), new Vector2(4,1), new Vector2(5,1), new Vector2(6,1), new Vector2(7,1),
+					new Vector2(1,2), new Vector2(2,2), new Vector2(3,2), new Vector2(4,2), new Vector2(5,2), new Vector2(6,2), new Vector2(7,2),
+					new Vector2(0,3), new Vector2(1,3), new Vector2(2,3), new Vector2(3,3), new Vector2(4,3), new Vector2(5,3), new Vector2(6,3), new Vector2(7,3),
+					new Vector2(1,4), new Vector2(2,4), new Vector2(3,4), new Vector2(4,4), new Vector2(5,4), new Vector2(6,4), new Vector2(7,4),
+					                                                                                          new Vector2(6,5)
+
 				}
-			}
-			}
 			},
-			{2, new Godot.Collections.Dictionary{
-				{"tilePositions", new List<Vector2>{
-					new Vector2(0,0), new Vector2(0,1), new Vector2(0,2),
-					new Vector2(1,0), new Vector2(1,1), new Vector2(1,2),
-					new Vector2(2,0), new Vector2(2,1), new Vector2(2,2),
-					new Vector2(3,0), new Vector2(3,1), new Vector2(3,2)
+				{"extendPoints", new List<Vector2>{new Vector2(-1,2), new Vector2(2,-1)}
+
 				}
 			}
 			}
-			}
+			
 			
 
 
 		};
 		
 		 //get positions from dictionary'
-		 if BigRoom.ContainsKey(int roomSelction = random.Next(0, 3)) {
+		 if BigRoom.ContainsKey(int roomSelction = random.Next(0, 2)) {
 			roomTiles = StartingRoom[int.Parse(roomSelction.ToString())]["tilePositions"] as List<Vector2>;
 		}
 		else
 		{
-			GD.Print("Error in generating Big rooms");
+			GD.Print("Error in generating Final room");
 		}
 
 	}			
@@ -195,4 +213,5 @@ public class MapCreator : TileMap
 		}
 		return rlist;
 	}
+}
 }
