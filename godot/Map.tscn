@@ -1,7 +1,6 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Map.cs" type="Script" id=1]
-[ext_resource path="res://DefaultFloors/StarterFloor.tscn" type="PackedScene" id=2]
 [ext_resource path="res://grey_square.jpg" type="Texture" id=3]
 [ext_resource path="res://Assets/Textures/Purple/texture_09.png" type="Texture" id=4]
 [ext_resource path="res://Assets/Textures/Red/texture_09.png" type="Texture" id=5]
@@ -11,7 +10,6 @@
 
 [sub_resource type="TileSet" id=1]
 0/name = "texture_07.png 0"
-0/texture = ExtResource( 2 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 0, 32, 32 )
@@ -25,7 +23,6 @@
 0/shapes = [  ]
 0/z_index = 0
 1/name = "texture_07.png 1"
-1/texture = ExtResource( 2 )
 1/tex_offset = Vector2( 0, 0 )
 1/modulate = Color( 1, 1, 1, 1 )
 1/region = Rect2( 768, 64, 32, 32 )
