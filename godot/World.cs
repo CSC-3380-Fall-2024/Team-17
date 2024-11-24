@@ -20,7 +20,7 @@ public class World : Spatial
 		environment.DofBlurFarEnabled = true;
 		environment.DofBlurNearEnabled = true;
 		
-		GenerateMap("DevRoom"); 
+		GenerateMap("MapCreator"); 
 	}
 	 
 	private void GenerateMap(string i)//need to specify the tilemap but only if it is related to the Map node
