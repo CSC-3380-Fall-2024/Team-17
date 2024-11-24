@@ -20,7 +20,7 @@ public class World : Spatial
 		environment.DofBlurFarEnabled = true;
 		environment.DofBlurNearEnabled = true;
 		
-		GenerateMap("MapCreator"); 
+		GenerateMap("DevRoom"); 
 	}
 	 
 	private void GenerateMap(string i)//need to specify the tilemap but only if it is related to the Map node
@@ -45,7 +45,7 @@ public class World : Spatial
 			AddChild(cell);
 			cell.Translation = new Vector3(tile.x * Globals.GRID_SIZE, 0, tile.y * Globals.GRID_SIZE);
 			cells.Add(cell);
-			//GD.Print($"Cell created at: {cell.Translation}");
+			GD.Print($"Cell created at: {cell.Translation}");
 		}
 	
 		foreach (var cell in cells)
