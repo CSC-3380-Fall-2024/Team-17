@@ -11,6 +11,14 @@ public class World : Spatial
 	
 	private List<Cell> cells = new List<Cell>();
 	
+	private int this_floor = 0;
+
+	protected enum Floor {
+		BELOW,
+		HERE,
+		ABOVE
+	}
+
 	public override void _Ready()
 	{
 		var environment = GetTree().Root.World.FallbackEnvironment as Godot.Environment;
@@ -20,24 +28,37 @@ public class World : Spatial
 		environment.DofBlurFarEnabled = true;
 		environment.DofBlurNearEnabled = true;
 		
-		GenerateMap("MapCreator"); 
+		ConfigFile dbgFile = new ConfigFile();
+		dbgFile.Load("res://Config/debug.cfg");
+		string mapName = dbgFile.GetValue("FLOOR_SETTINGS", "MAP_NAME", "random") as string;
+
+		if(mapName.Equals("random")){
+			// GenerateMap();	//implement call to Floor Builder once zion finishes rebuilding the map generation
+								//until then, we bounce back to debug
+			GetTree().ChangeScene("res://DebugMenu.tscn");	//delete this line and uncomment the above function call when map gen is implemented
+		}
+		else GenerateMap("res://DefaultFloors/" + mapName); 
 	}
-	 
+	
+	private void GenerateMap(){
+		 //implement once map gen is working
+	}
+	
 	private void GenerateMap(string i)//need to specify the tilemap but only if it is related to the Map node
 	{
-		if (Map == null) return;
+		// if (Map == null) return;
 		
-		var mapInstance = Map.Instance(); 
-		AddChild(mapInstance);
-		var mapScript = mapInstance as Map;
-		var tileMap = mapScript.GetTileMap(i); 
+		// var mapInstance = Map.Instance(); 
+		// AddChild(mapInstance);
+		// var mapScript = mapInstance as Map;
+		// var tileMap = mapScript.GetTileMap(i);
+		var mapScene = ResourceLoader.Load<PackedScene>(i).Instance();
+		TileMap tileMap = mapScene as TileMap;
 		Array<Vector2> usedTiles = new Array<Vector2>();
 		foreach (var vector in tileMap.GetUsedCells())
 		{
 			usedTiles.Add((Vector2)vector);
 		}
-
-		mapInstance.QueueFree();
 	
 		foreach (Vector2 tile in usedTiles)
 		{
@@ -45,7 +66,7 @@ public class World : Spatial
 			AddChild(cell);
 			cell.Translation = new Vector3(tile.x * Globals.GRID_SIZE, 0, tile.y * Globals.GRID_SIZE);
 			cells.Add(cell);
-			//GD.Print($"Cell created at: {cell.Translation}");
+			GD.Print($"Cell created at: {cell.Translation}");
 		}
 	
 		foreach (var cell in cells)

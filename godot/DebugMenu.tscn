@@ -1,0 +1,145 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://StoneWall.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Textures/NESCyrillic.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://DebugMenu.cs" type="Script" id=3]
+[ext_resource path="res://RoomSelector.cs" type="Script" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+size = 50
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 40
+font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0, 0, 0, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 50
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=7]
+size = 50
+font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 1, 0.988235, 0.988235, 1 )
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 0, 0, 0, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 1, 0.996078, 0.996078, 1 )
+
+[node name="Control" type="Control"]
+margin_right = 1027.0
+margin_bottom = 603.0
+script = ExtResource( 3 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 1024.0
+margin_bottom = 597.0
+texture = ExtResource( 1 )
+stretch_mode = 1
+
+[node name="Title" type="Label" parent="."]
+margin_left = 199.0
+margin_top = 47.0
+margin_right = 854.0
+margin_bottom = 120.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 1 )
+text = "debug menu "
+align = 1
+uppercase = true
+
+[node name="Title Subtext" type="Label" parent="."]
+visible = false
+margin_left = 193.0
+margin_top = 130.0
+margin_right = 848.0
+margin_bottom = 203.0
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 1 )
+text = "select an option"
+align = 1
+uppercase = true
+
+[node name="Floor Generator" type="Button" parent="."]
+visible = false
+margin_left = 109.0
+margin_top = 263.0
+margin_right = 398.0
+margin_bottom = 358.0
+rect_pivot_offset = Vector2( -803, -112 )
+custom_colors/icon_color_pressed = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 2 )
+custom_styles/hover = SubResource( 3 )
+custom_styles/pressed = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+text = "Generate Floor"
+
+[node name="Room Select" type="Button" parent="."]
+visible = false
+margin_left = 672.0
+margin_top = 263.0
+margin_right = 954.0
+margin_bottom = 358.0
+rect_pivot_offset = Vector2( -803, -112 )
+custom_colors/icon_color_pressed = Color( 0, 0, 0, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 2 )
+custom_styles/hover = SubResource( 3 )
+custom_styles/pressed = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+text = "Room select"
+
+[node name="RoomSelector" type="MenuButton" parent="."]
+anchor_left = 0.285
+anchor_top = 0.269
+anchor_right = 0.707
+anchor_bottom = 0.769
+margin_left = 13.305
+margin_top = -72.207
+margin_right = 12.9111
+margin_bottom = -304.707
+custom_fonts/font = SubResource( 6 )
+text = "select a room"
+script = ExtResource( 4 )
+
+[node name="Back" type="Button" parent="RoomSelector"]
+margin_left = 469.0
+margin_top = 406.0
+margin_right = 671.0
+margin_bottom = 479.0
+custom_colors/icon_color_normal = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 7 )
+custom_styles/hover = SubResource( 8 )
+custom_styles/pressed = SubResource( 9 )
+custom_styles/normal = SubResource( 10 )
+text = "back"
+
+[connection signal="pressed" from="Floor Generator" to="." method="_on_Floor_Generater_pressed"]
+[connection signal="pressed" from="Room Select" to="." method="_on_Room_Select_pressed"]
+[connection signal="pressed" from="RoomSelector/Back" to="." method="_on_Back_pressed"]
