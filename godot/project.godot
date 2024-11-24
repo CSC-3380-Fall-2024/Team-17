@@ -11,7 +11,7 @@ config_version=4
 [application]
 
 config/name="CSC 3380 Group Project"
-run/main_scene="res://World.tscn"
+run/main_scene="res://DebugMenu.tscn"
 config/icon="res://icon.png"
 
 [autoload]
