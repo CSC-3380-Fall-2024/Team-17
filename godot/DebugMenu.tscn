@@ -140,6 +140,6 @@ custom_styles/pressed = SubResource( 9 )
 custom_styles/normal = SubResource( 10 )
 text = "back"
 
-[connection signal="pressed" from="Floor Generator" to="." method="_on_Floor_Generater_pressed"]
+[connection signal="pressed" from="Floor Generator" to="." method="_on_Floor_Generator_pressed"]
 [connection signal="pressed" from="Room Select" to="." method="_on_Room_Select_pressed"]
 [connection signal="pressed" from="RoomSelector/Back" to="." method="_on_Back_pressed"]

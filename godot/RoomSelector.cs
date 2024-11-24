@@ -30,7 +30,7 @@ public class RoomSelector : MenuButton
 		return tileList;
 
 	}
-	private void iPressed(int x)
+	private void IPressed(int x)
 	{
 		string id = GetNode<MenuButton>(".").GetPopup().GetItemText(x);
 		tscnPath = new ConfigFile();
@@ -46,7 +46,7 @@ public class RoomSelector : MenuButton
 		{
 			GetNode<MenuButton>(".").GetPopup().AddItem(i);
 		}
-		GetNode<MenuButton>(".").GetPopup().Connect("id_pressed", GetNode<MenuButton>("."),nameof(iPressed));
+		GetNode<MenuButton>(".").GetPopup().Connect("id_pressed", GetNode<MenuButton>("."),nameof(IPressed));
 		
 	}
 }
