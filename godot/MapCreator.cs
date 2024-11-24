@@ -1,21 +1,185 @@
 using Godot;
+using Godot.Collections;
 using System;
+using System.Collections.Generic;
+
 
 public class MapCreator : TileMap
 {
-	// Declare member variables here. Examples:
-	// private int a = 2;
-	// private string b = "text";
+	private List<Vector2> tilePositions = new List<Vector2>();
 
-	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		
 	}
 
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-//  public override void _Process(float delta)
-//  {
-//      
-//  }
+
+	//a method to hold different starting rooms shapes
+	private void GenerateStartingRoom()
+	{
+		Random random = new Random();
+		 
+		List<Vector2> roomTiles = new List<Vector2>();
+
+
+		var StartingRoom = new Godot.Collections.Dictionary {
+			{0, new Godot.Collections.Dictionary{ 
+				{"tilePositions", new List<Vector2>{
+					new Vector2(0, 0), new Vector2(1,0), new Vector2(2,0),
+					new Vector2(0, 1), new Vector2(1,1), new Vector2(2,1),
+					new Vector2(0, 2), new Vector2(1,2), new Vector2(2,2),
+									   new Vector2(1,2)}
+					},
+
+				}
+
+
+			},
+			{1, new Godot.Collections.Dictionary{
+				{"tilePositions", new List<Vector2>{
+					new Vector2(0,0), new Vector2(0,1), new Vector2(0,2)
+				}
+			}
+			}
+			},
+			{2, new Godot.Collections.Dictionary{
+				{"tilePositions", new List<Vector2>{
+					new Vector2(2,0), new Vector2(0,1), new Vector2(1,1), new Vector2(2,1), new Vector2(2,2), new Vector2(2,3)
+
+				}
+			}
+			}
+			}
+			
+
+
+		};
+		
+		 //get positions from dictionary'
+		 if StartingRoom.ContainsKey(int roomSelction = random.Next(0, 3)) {
+			roomTiles = StartingRoom[int.Parse(roomSelction.ToString())]["tilePositions"] as List<Vector2>;
+		}
+		else
+		{
+			GD.Print("Error in generating starting room");
+		}
+		
+		
+
+
+
+	}
+
+	private void GenerateBigRoom()
+	{
+		Random random = new Random();
+		 
+		List<Vector2> roomTiles = new List<Vector2>();
+
+
+		var BigRoom = new Godot.Collections.Dictionary {
+			{0, new Godot.Collections.Dictionary{ 
+				{"tilePositions", new List<Vector2>{
+					new Vector2(2, 0), new Vector2(3,0), new Vector2(4,0),
+					new Vector2(0, 1), new Vector2(1,1), new Vector2(2,1), new Vector2(3,1), new Vector2(4,1),
+					new Vector2(0, 2), new Vector2(1,2), new Vector2(2,2), new Vector2(3,2), new Vector2(4,2),
+					new Vector2(0, 3), new Vector2(1,3), new Vector2(2,3), new Vector2(3,3), new Vector2(4,3),
+					new Vector2(0, 4), new Vector2(1,4), new Vector2(2,4), new Vector2(3,4), new Vector2(4,4)
+					}
+					},
+
+				}
+
+
+			},
+			{1, new Godot.Collections.Dictionary{
+				{"tilePositions", new List<Vector2>{
+					new Vector2(0,0), new Vector2(0,1), new Vector2(0,2),
+					new Vector2(1,0), new Vector2(1,1), new Vector2(1,2),
+					new Vector2(2,0), new Vector2(2,1), new Vector2(2,2)
+				}
+			}
+			}
+			},
+			{2, new Godot.Collections.Dictionary{
+				{"tilePositions", new List<Vector2>{
+					new Vector2(0,0), new Vector2(0,1), new Vector2(0,2),
+					new Vector2(1,0), new Vector2(1,1), new Vector2(1,2),
+					new Vector2(2,0), new Vector2(2,1), new Vector2(2,2),
+					new Vector2(3,0), new Vector2(3,1), new Vector2(3,2)
+				}
+			}
+			}
+			}
+			
+
+
+		};
+		
+		 //get positions from dictionary'
+		 if BigRoom.ContainsKey(int roomSelction = random.Next(0, 3)) {
+			roomTiles = StartingRoom[int.Parse(roomSelction.ToString())]["tilePositions"] as List<Vector2>;
+		}
+		else
+		{
+			GD.Print("Error in generating Big rooms");
+		}
+
+	}
+	private void GenerateFinalRoom()
+	{
+		Random random = new Random();
+		 
+		List<Vector2> roomTiles = new List<Vector2>();
+
+
+		var FinalRoom = new Godot.Collections.Dictionary {
+			{0, new Godot.Collections.Dictionary{ 
+				{"tilePositions", new List<Vector2>{
+					new Vector2(0, 0),  new Vector2(1,0), new Vector2(2, 0), new Vector2(3,0), new Vector2(4,0),
+					new Vector2(0, 1), new Vector2(1,1), new Vector2(2,1), new Vector2(3,1), new Vector2(4,1), new Vector2(5,1),
+					new Vector2(0, 2), new Vector2(1,2), new Vector2(2,2), new Vector2(3,2), new Vector2(4,2), new Vector2(5,2), new Vector2(6,2),
+					new Vector2(0, 3), new Vector2(1,3), new Vector2(2,3), new Vector2(3,3), new Vector2(4,3), new Vector2(5,3), 
+					new Vector2(0, 4), new Vector2(1,4), new Vector2(2,4), new Vector2(3,4), new Vector2(4,4)
+					}
+					},
+				{"extendPoints", new List<Vector2>{}
+
+				}
+				
+
+
+			},
+			{1, new Godot.Collections.Dictionary{
+				{"tilePositions", new List<Vector2>{
+					
+				}
+			}
+			}
+			},
+			{2, new Godot.Collections.Dictionary{
+				{"tilePositions", new List<Vector2>{
+					new Vector2(0,0), new Vector2(0,1), new Vector2(0,2),
+					new Vector2(1,0), new Vector2(1,1), new Vector2(1,2),
+					new Vector2(2,0), new Vector2(2,1), new Vector2(2,2),
+					new Vector2(3,0), new Vector2(3,1), new Vector2(3,2)
+				}
+			}
+			}
+			}
+			
+
+
+		};
+		
+		 //get positions from dictionary'
+		 if BigRoom.ContainsKey(int roomSelction = random.Next(0, 3)) {
+			roomTiles = StartingRoom[int.Parse(roomSelction.ToString())]["tilePositions"] as List<Vector2>;
+		}
+		else
+		{
+			GD.Print("Error in generating Big rooms");
+		}
+
+	}			
 }
