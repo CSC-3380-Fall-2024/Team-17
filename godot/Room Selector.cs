@@ -23,6 +23,7 @@ public class Room_Selector : MenuButton
             tileList.Add(fileItr);
             fileItr = dir.GetNext();
         }
+        dir.ListDirEnd();
         return tileList;
 
     }
