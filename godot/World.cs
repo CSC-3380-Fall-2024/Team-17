@@ -11,6 +11,14 @@ public class World : Spatial
 	
 	private List<Cell> cells = new List<Cell>();
 	
+	private int this_floor = 0;
+
+	protected enum Floor {
+		BELOW,
+		HERE,
+		ABOVE
+	}
+
 	public override void _Ready()
 	{
 		var environment = GetTree().Root.World.FallbackEnvironment as Godot.Environment;
