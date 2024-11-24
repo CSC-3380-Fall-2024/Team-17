@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Map.cs" type="Script" id=1]
-[ext_resource path="res://Assets/Textures/Light/texture_07.png" type="Texture" id=2]
+[ext_resource path="res://DefaultFloors/StarterFloor.tscn" type="PackedScene" id=2]
 [ext_resource path="res://grey_square.jpg" type="Texture" id=3]
 [ext_resource path="res://Assets/Textures/Purple/texture_09.png" type="Texture" id=4]
 [ext_resource path="res://Assets/Textures/Red/texture_09.png" type="Texture" id=5]
