@@ -3,6 +3,7 @@ using System;
 using Godot.Collections;
 using System.Collections.Generic;
 using System.Runtime.ExceptionServices;
+using System.Linq;
 
 
 public class RoomSelector : MenuButton
@@ -30,14 +31,14 @@ public class RoomSelector : MenuButton
 		return tileList;
 
 	}
-	private void iPressed(int x)
+	private void IPressed(int x)
 	{
 		string id = GetNode<MenuButton>(".").GetPopup().GetItemText(x);
 		tscnPath = new ConfigFile();
 		tscnPath.Load("res://Config/debug.cfg");
 		tscnPath.SetValue("FLOOR_SETTINGS","MAP_NAME", id);
 		tscnPath.Save("res://Config/debug.cfg");
-		GetTree().ChangeScene("res://World.tscn"); //greyed out because breaks if implemented
+		//GetTree().ChangeScene("res://World.tscn"); //greyed out because breaks if implemented
 	}
 	public override void _Ready()
 	{
@@ -46,7 +47,7 @@ public class RoomSelector : MenuButton
 		{
 			GetNode<MenuButton>(".").GetPopup().AddItem(i);
 		}
-		GetNode<MenuButton>(".").GetPopup().Connect("id_pressed", GetNode<MenuButton>("."),nameof(iPressed));
+		GetNode<MenuButton>(".").GetPopup().Connect("id_pressed", GetNode<MenuButton>("."),nameof(IPressed));
 		
 	}
 }
