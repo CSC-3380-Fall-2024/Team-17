@@ -4,7 +4,7 @@ using System;
 public class ClickInteractB : Area
 {
 	// The path to the scene you want to switch to
-	[Export] public string SceneToLoad = "res://Combat/Battle.tscn";
+	[Export] public string SceneToLoad = "res://Combat.tscn";
 	
 	public override void _Ready()
 	{
