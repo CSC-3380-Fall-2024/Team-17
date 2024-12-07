@@ -2,7 +2,6 @@
 
 [ext_resource path="res://Assets/Textures/Light/RoomTiles.png" type="Texture" id=1]
 
-
 [sub_resource type="TileSet" id=1]
 0/name = "texture_07.png 0"
 0/texture = ExtResource( 1 )
@@ -26,7 +25,7 @@
 0/shapes = [  ]
 0/z_index = 0
 
-[node name="TileMap" type="TileMap"]
+[node name="TileMap2" type="TileMap"]
 tile_set = SubResource( 1 )
 cell_size = Vector2( 32, 32 )
 cell_quadrant_size = 32
