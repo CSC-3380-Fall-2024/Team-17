@@ -5,7 +5,7 @@ public class ClickInteractB : Area
 {
 	// The path to the scene you want to switch to
 	[Export] public string SceneToLoad = "res://Combat/Battle.tscn";
-	
+
 	public override void _Ready()
 	{
 		// Connect the input event to the handler
@@ -20,5 +20,11 @@ public class ClickInteractB : Area
 			// Change the scene when the object is clicked
 			GetTree().ChangeScene(SceneToLoad);
 		}
+	}
+
+	public void OnPlayerCollision()
+	{
+		GD.Print("InteractableB collided with player and will disappear.");
+		QueueFree(); // This will remove the object from the scene
 	}
 }

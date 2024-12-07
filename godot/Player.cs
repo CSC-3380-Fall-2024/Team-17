@@ -23,8 +23,8 @@ public class Player : Spatial
 
 		timerprocessor.Connect("timeout", this, nameof(OnTimerTimeout));
 	}
-	
-	  public override void _Input(InputEvent @event)
+
+	public override void _Input(InputEvent @event)
 	{
 		if (@event is InputEventMouseButton mouseEvent && IsLeftClick(mouseEvent))
 		{
@@ -39,22 +39,42 @@ public class Player : Spatial
 
 	private void CheckForInteractableInFront()
 	{
+		// Check if there is any collision in the forward raycast direction
 		if (!CollisionCheck(forward)) return;
 
 		var collider = forward.GetCollider();
-		if (collider is Node interactableNode && interactableNode.HasMethod("OnInteract"))
+		
+		// Check if the collider is of the type ClickInteractB
+		if (collider is ClickInteractB interactableB)
 		{
-			interactableNode.Call("OnInteract");
+			interactableB.OnPlayerCollision(); // Call the method to make the object disappear
 		}
 	}
-	
+
 	private bool CollisionCheck(RayCast direction)
 	{
-	if (direction != null)
+		// Ensure the direction isn't null and there's a collision
+		if (direction != null && direction.IsColliding())
 		{
-			return direction.IsColliding();
+			var collider = direction.GetCollider();
+
+			// Ensure the collider is an instance of ClickInteractB (or your desired interactable class)
+			if (collider is ClickInteractB interactableB)
+			{
+				GD.Print($"Collided with: {interactableB.Name}");
+
+				// When we collide with InteractableB, make it disappear
+				interactableB.QueueFree(); // Remove InteractableB from the scene
+
+				// Optionally, allow movement after collision
+				return false; // Return false to continue the movement
+			}
+			// If collided with something else, block movement
+			GD.Print("Blocked by non-interactable object.");
+			return true; // Block movement
 		}
-		return false;
+
+		return false; // No collision detected, allow movement freely
 	}
 
 	private async Task TweenTranslation(Vector3 change)
@@ -89,12 +109,11 @@ public class Player : Spatial
 
 		Vector3 movementDirection = Vector3.Zero;
 		int turnDir = (turnQ ? 1 : 0) - (turnE ? 1 : 0);
-		//float tileSize = Globals.GRID_SIZE; unused
 
 		if (goW) movementDirection += -GlobalTransform.basis.z * Globals.GRID_SIZE;
 		else if (goS) movementDirection += GlobalTransform.basis.z * Globals.GRID_SIZE;
 		else if (goA) movementDirection += -GlobalTransform.basis.x * Globals.GRID_SIZE;
-		else if (goD) movementDirection += GlobalTransform.basis.x *Globals.GRID_SIZE;
+		else if (goD) movementDirection += GlobalTransform.basis.x * Globals.GRID_SIZE;
 		else if (Convert.ToBoolean(turnDir))
 		{
 			timerprocessor.Stop();
@@ -104,7 +123,7 @@ public class Player : Spatial
 
 		if (movementDirection != Vector3.Zero)
 		{
-			if(goW)//checks button to see if pressed and if so then does a collision check
+			if(goW)
 			{
 				if (CollisionCheck(forward))
 				{
@@ -142,4 +161,4 @@ public class Player : Spatial
 			}
 		}
 	}
-} 
+}
