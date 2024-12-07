@@ -8,23 +8,23 @@ public class ClickInteractB : Area
 
 	public override void _Ready()
 	{
-		// Connect the input event to the handler
-		Connect("input_event", this, nameof(OnInteractableClicked));
+		// Ensure collision signals are connected (if needed)
+		Connect("body_entered", this, nameof(OnBodyEntered));
 	}
 
-	private void OnInteractableClicked(Node camera, InputEvent inputEvent, Vector3 clickPosition, Vector3 normal, int shapeIdx)
+	private void OnBodyEntered(Node body)
 	{
-		// Check if the left mouse button was clicked
-		if (inputEvent is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == (int)ButtonList.Left)
+		// Check if the body that entered is the player
+		if (body is Player)
 		{
-			// Change the scene when the object is clicked
-			GetTree().ChangeScene(SceneToLoad);
+			GD.Print("Player collided with InteractableB!");
+			OnPlayerCollision(); // Call the interaction logic
 		}
 	}
 
 	public void OnPlayerCollision()
 	{
-		GD.Print("InteractableB collided with player and will disappear.");
-		QueueFree(); // This will remove the object from the scene
+		GD.Print("InteractableB was triggered by the player!");
+		QueueFree(); // Remove the object or perform other actions
 	}
 }
