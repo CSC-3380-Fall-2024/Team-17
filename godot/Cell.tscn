@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Cell.cs" type="Script" id=1]
 [ext_resource path="res://Wall.obj" type="ArrayMesh" id=2]
 [ext_resource path="res://Floor.obj" type="ArrayMesh" id=3]
 [ext_resource path="res://Interactable.tscn" type="PackedScene" id=4]
 [ext_resource path="res://InteractableB.tscn" type="PackedScene" id=5]
+[ext_resource path="res://InteractableA.tscn" type="PackedScene" id=6]
 
 [sub_resource type="BoxShape" id=1]
 
@@ -13,8 +14,10 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0291784, -0.00336307, 0.011
 collision_layer = 4
 collision_mask = 4
 script = ExtResource( 1 )
-spawnProbability = 0.1
-interactable = ExtResource( 5 )
+spawnProbabilityA = 0.01
+spawnProbabilityB = 0.1
+interactableA = ExtResource( 6 )
+interactableB = ExtResource( 5 )
 
 [node name="TopFace" type="MeshInstance" parent="."]
 transform = Transform( -1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 0, 2, 0 )
