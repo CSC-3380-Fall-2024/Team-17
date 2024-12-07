@@ -21,12 +21,13 @@ Player="*res://Player.tscn"
 [display]
 
 window/stretch/mode="viewport"
-window/stretch/aspect="expand"
+window/stretch/aspect="keep"
 
 [global]
 
 strecth=false
 stretch=false
+viewport=false
 
 [gui]
 
