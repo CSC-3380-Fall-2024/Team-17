@@ -8,7 +8,11 @@ public class DebugMenu : Control
 
 	private void _on_Floor_Generater_pressed()
 	{
-		GD.Print("Not Yet Implemented");
+		ConfigFile cfg = new ConfigFile();
+		cfg.Load("res://Config/debug.cfg");
+		cfg.SetValue("FLOOR_SETTINGS","MAP_NAME", "random");
+		cfg.Save("res://Config/debug.cfg");
+		GetTree().ChangeScene("res://World.tscn");
 	}
 	private void _on_Room_Select_pressed()
 	{

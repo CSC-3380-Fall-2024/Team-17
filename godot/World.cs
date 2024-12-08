@@ -30,18 +30,41 @@ public class World : Spatial
 		
 		ConfigFile dbgFile = new ConfigFile();
 		dbgFile.Load("res://Config/debug.cfg");
-		string mapName = dbgFile.GetValue("FLOOR_SETTINGS", "MAP_NAME", "random") as string;
-
-		if(mapName.Equals("random")){
-			// GenerateMap();	//implement call to Floor Builder once zion finishes rebuilding the map generation
-								//until then, we bounce back to debug
-			GetTree().ChangeScene("res://DebugMenu.tscn");	//delete this line and uncomment the above function call when map gen is implemented
+		string mapName = dbgFile.GetValue("FLOOR_SETTINGS", "MAP_NAME") as string;
+		GD.Print(mapName);
+		if(mapName.Equals("random"))
+		{
+			GenerateMap();
 		}
-		else GenerateMap("res://DefaultFloors/" + mapName); 
+		else 
+		{
+			GenerateMap("res://DefaultFloors/" + mapName); 
+		}
 	}
 	
-	private void GenerateMap(){
-		 //implement once map gen is working
+	private void GenerateMap()
+	{
+		var mapInstance = GetNode<Node2D>("Map"); //ResourceLoader.Load<PackedScene>("res://Map.tscn").Instance();
+		TileMap tileMap = mapInstance.GetChild(0) as TileMap;
+		Array<Vector2> usedTiles = new Array<Vector2>();
+		foreach (var vector in tileMap.GetUsedCells())
+		{
+			usedTiles.Add((Vector2)vector);
+		}
+	
+		foreach (Vector2 tile in usedTiles)
+		{
+			var cell = (Cell)GD.Load<PackedScene>("res://Cell.tscn").Instance();
+			AddChild(cell);
+			cell.Translation = new Vector3(tile.x * Globals.GRID_SIZE, 0, tile.y * Globals.GRID_SIZE);
+			cells.Add(cell);
+			GD.Print($"Cell created at: {cell.Translation}");
+		}
+	
+		foreach (var cell in cells)
+		{
+			cell.UpdateFaces(usedTiles);
+		}
 	}
 	
 	private void GenerateMap(string i)//need to specify the tilemap but only if it is related to the Map node
