@@ -61,10 +61,11 @@ texture = ExtResource( 1 )
 stretch_mode = 1
 
 [node name="Title" type="Label" parent="."]
-margin_left = 199.0
-margin_top = 47.0
-margin_right = 854.0
-margin_bottom = 120.0
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -327.5
+margin_right = 327.5
+margin_bottom = 73.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 1 )
 text = "debug menu "
@@ -72,7 +73,6 @@ align = 1
 uppercase = true
 
 [node name="Title Subtext" type="Label" parent="."]
-visible = false
 margin_left = 193.0
 margin_top = 130.0
 margin_right = 848.0
@@ -84,11 +84,12 @@ align = 1
 uppercase = true
 
 [node name="Floor Generator" type="Button" parent="."]
-visible = false
-margin_left = 109.0
-margin_top = 263.0
-margin_right = 398.0
-margin_bottom = 358.0
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 100.0
+margin_top = -47.5
+margin_right = 389.0
+margin_bottom = 47.5
 rect_pivot_offset = Vector2( -803, -112 )
 custom_colors/icon_color_pressed = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
@@ -100,11 +101,14 @@ custom_styles/normal = SubResource( 5 )
 text = "Generate Floor"
 
 [node name="Room Select" type="Button" parent="."]
-visible = false
-margin_left = 672.0
-margin_top = 263.0
-margin_right = 954.0
-margin_bottom = 358.0
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -392.0
+margin_top = -47.5
+margin_right = -110.0
+margin_bottom = 47.5
 rect_pivot_offset = Vector2( -803, -112 )
 custom_colors/icon_color_pressed = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
@@ -115,15 +119,21 @@ custom_styles/pressed = SubResource( 4 )
 custom_styles/normal = SubResource( 5 )
 text = "Room select"
 
+[node name="ResolutionOptions" type="OptionButton" parent="."]
+margin_left = 432.0
+margin_top = 400.0
+margin_right = 596.0
+margin_bottom = 433.0
+text = "Resolution"
+
 [node name="RoomSelector" type="MenuButton" parent="."]
-anchor_left = 0.285
-anchor_top = 0.269
-anchor_right = 0.707
-anchor_bottom = 0.769
-margin_left = 13.305
-margin_top = -72.207
-margin_right = 12.9111
-margin_bottom = -304.707
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -216.5
+margin_top = 57.0
+margin_right = 216.5
+margin_bottom = 126.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_fonts/font = SubResource( 6 )
 text = "select a room"
 script = ExtResource( 4 )
@@ -140,6 +150,6 @@ custom_styles/pressed = SubResource( 9 )
 custom_styles/normal = SubResource( 10 )
 text = "back"
 
-[connection signal="pressed" from="Floor Generator" to="." method="_on_Floor_Generater_pressed"]
+[connection signal="pressed" from="Floor Generator" to="." method="_on_Floor_Generator_pressed"]
 [connection signal="pressed" from="Room Select" to="." method="_on_Room_Select_pressed"]
 [connection signal="pressed" from="RoomSelector/Back" to="." method="_on_Back_pressed"]

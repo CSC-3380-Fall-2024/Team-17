@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://SigEnemy.cs" type="Script" id=1]
+[ext_resource path="res://SigPlayer.cs" type="Script" id=2]
+[ext_resource path="res://SigContrScript.cs" type="Script" id=3]
+
+[node name="SignalController" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="SigPlayer" type="Node2D" parent="."]
+script = ExtResource( 2 )
+
+[node name="SigEnemy" type="Node2D" parent="."]
+script = ExtResource( 1 )
