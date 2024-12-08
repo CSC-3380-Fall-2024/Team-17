@@ -175,7 +175,7 @@ public class MapCreator : TileMap
 					new Vector2(1,2), new Vector2(2,2), new Vector2(3,2), new Vector2(4,2), new Vector2(5,2), new Vector2(6,2), new Vector2(7,2),
 					new Vector2(0,3), new Vector2(1,3), new Vector2(2,3), new Vector2(3,3), new Vector2(4,3), new Vector2(5,3), new Vector2(6,3), new Vector2(7,3),
 					new Vector2(1,4), new Vector2(2,4), new Vector2(3,4), new Vector2(4,4), new Vector2(5,4), new Vector2(6,4), new Vector2(7,4),
-					                                                                                          new Vector2(6,5)
+																											  new Vector2(6,5)
 
 				}
 			},
