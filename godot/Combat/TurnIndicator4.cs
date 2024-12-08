@@ -16,8 +16,14 @@ public class TurnIndicator4 : Panel
 	}
 	private void DMGTaken(int health)
 	{
-		SetText(health, (int)_pBar.Value);
+
+		ConfigFile cFile = new ConfigFile();
+		cFile.Load("res://config/debug.cfg");
+		int maxHealth = (int)cFile.GetValue("ALLY3","HEALTH");
+		SetText(health, maxHealth);
 		_pBar.Value = health;
+
+
 	}
 	private void BarUpdate(int health)
 	{
