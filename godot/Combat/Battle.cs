@@ -55,6 +55,7 @@ public class Battle : Control
 	public List<CombatChar> partyMem = new List<CombatChar>();
 	public bool startSig;
 	private CombatChar enemy;
+	static public SkillList sList = new SkillList();
 	public override void _Input(InputEvent @event)
 	{
 		// Checks that the left mouse button is pressed
@@ -91,7 +92,6 @@ public class Battle : Control
 		display_text("A wild enemy appears!");
 		Connect(nameof(FinishedSel),this, nameof(ReadySig));
 		Connect(nameof(TextboxClosed), this, nameof(OnTextboxClosed));
-		SkillList sList = new SkillList();
 		CombatPlayer player = new CombatPlayer("PLAYER","debug");
 		CombatChar ally1 = new CombatChar("ALLY1", "debug");
 		CombatChar ally2 = new CombatChar("ALLY2", "debug");
@@ -110,62 +110,63 @@ public class Battle : Control
 	}
 	 public override void _Process(float delta)
  	{
-		SkillList sList = new SkillList();
 		List<string> strList = sList.GetAllSkills();
 		if(turnQueue.Count.Equals(4) && startSig)
 			{
-				foreach(string i in turnQueue)
-				{
-					GD.Print(i);
-				}
-				EmitSignal(nameof(EnemyChoiceSel));
+				foreach(string i in turnQueue) { GD.Print(i); }
+				List<string> eChList = enemy.GetSkills();
+				eChList.Add("attack");
+				Random rand = new Random();
+				int r = rand.Next(eChList.Count);
+				turnQueue.Enqueue("e"+eChList[r]);
+				GD.Print(turnQueue.Count);
 				while(turnQueue.Count != 0 && startSig)
 				{
 					int j = 0;
+					CombatChar y = turnOrder[j];
 					string i = turnQueue.Peek();
-					Random rand = new Random();
 					int x = rand.Next(4);
 					switch (i)
 					{
 						case "attack":
-						EmitSignal(nameof(Atk),turnOrder[j].DamageCalc(turnOrder[j].BaseAttack(),enemy),enemy);
-						display_text(turnOrder[j].name + "is attacking enemy for " + turnOrder[j].BaseAttack());
+						EmitSignal(nameof(Atk),y.DamageCalc(y.BaseAttack(),enemy),enemy);
+						GD.Print(y.name + " is attacking enemy for " + y.BaseAttack());
 						break;
-						case "eAttack":
-						EmitSignal(nameof(Atk),enemy.DamageCalc(enemy.BaseAttack(),partyMem[x]),partyMem[x]);
-						display_text(enemy.name + "is attacking " + partyMem[x].name + " for " + enemy.BaseAttack());
+						case "eattack":
+						EmitSignal(nameof(Atk) ,enemy.DamageCalc(enemy.BaseAttack(),partyMem[x]),partyMem[x]);
+						GD.Print(enemy.name + " is attacking " + partyMem[x].name + " for " + enemy.BaseAttack());
 						break;
 						case "ice1":
-						EmitSignal(nameof(SkillAtk),turnOrder[j].DamageCalc(turnOrder[j].SkillAttack(sList.GetSkill((string)i)),enemy));
-						display_text(turnOrder[j].name + "activates spell " + i +" for "+ turnOrder[j].SkillAttack(sList.GetSkill(i)));
+						EmitSignal(nameof(SkillAtk),sList.GetSkill(i),y,enemy);
+						GD.Print(y.name + " activates spell " + i +" for "+ y.SkillAttack(sList.GetSkill(i)));
 						break;
 						case "fire1":
-						EmitSignal(nameof(SkillAtk),turnOrder[j].DamageCalc(turnOrder[j].SkillAttack(sList.GetSkill((string)i)),enemy));
-						display_text(turnOrder[j].name + "activates spell " + i +" for "+ turnOrder[j].SkillAttack(sList.GetSkill(i)));
+						EmitSignal(nameof(SkillAtk),sList.GetSkill(i),y,enemy);
+						GD.Print(y.name + " activates spell " + i +" for "+ y.SkillAttack(sList.GetSkill(i)));
 						break;
 						case "elec1":
-						EmitSignal(nameof(SkillAtk),turnOrder[j].DamageCalc(turnOrder[j].SkillAttack(sList.GetSkill((string)i)),enemy));
-						display_text(turnOrder[j].name + "activates spell " + i +" for "+ turnOrder[j].SkillAttack(sList.GetSkill(i)));
+						EmitSignal(nameof(SkillAtk),sList.GetSkill(i),y,enemy);
+						GD.Print(y.name + " activates spell " + i +" for "+ y.SkillAttack(sList.GetSkill(i)));
 						break;
 						case "stab1":
-						EmitSignal(nameof(SkillAtk),turnOrder[j].DamageCalc(turnOrder[j].SkillAttack(sList.GetSkill((string)i)),enemy));
-						display_text(turnOrder[j].name + "activates spell " + i +" for "+ turnOrder[j].SkillAttack(sList.GetSkill(i)));
+						EmitSignal(nameof(SkillAtk),sList.GetSkill(i),y,enemy);
+						GD.Print(y.name + " activates spell " + i +" for "+ y.SkillAttack(sList.GetSkill(i)));
 						break;
 						case "eice1":
-						EmitSignal(nameof(SkillAtk),turnOrder[j].DamageCalc(enemy.SkillAttack(sList.GetSkill((string)i)),partyMem[x]));
-						display_text(enemy.name + "activates spell " + i +" at "+ turnOrder[x].name + " for " +enemy.SkillAttack(sList.GetSkill(i)));
-						break;
+						EmitSignal(nameof(SkillAtk), sList.GetSkill(i.Substring(1)), enemy, partyMem[x]);
+						GD.Print(enemy.name + " activates spell " + i.Substring(1) +" at "+ turnOrder[x].name + " for " +enemy.SkillAttack(sList.GetSkill(i.Substring(1))));
+						break; 
 						case "efire1":
-						EmitSignal(nameof(SkillAtk),turnOrder[j].DamageCalc(turnOrder[j].SkillAttack(sList.GetSkill((string)i)),enemy));
-						display_text(enemy.name + "activates spell " + i +" at "+ turnOrder[x].name + " for " +enemy.SkillAttack(sList.GetSkill(i)));
+						EmitSignal(nameof(SkillAtk), sList.GetSkill(i.Substring(1)), enemy, partyMem[x]);
+						GD.Print(enemy.name + " activates spell " + i.Substring(1) +" at "+ turnOrder[x].name + " for " +enemy.SkillAttack(sList.GetSkill(i.Substring(1))));
 						break;
 						case "eelec1":
-						EmitSignal(nameof(SkillAtk),turnOrder[j].DamageCalc(turnOrder[j].SkillAttack(sList.GetSkill((string)i)),enemy));
-						display_text(enemy.name + "activates spell " + i +" at "+ turnOrder[x].name + " for " +enemy.SkillAttack(sList.GetSkill(i)));
+						EmitSignal(nameof(SkillAtk), sList.GetSkill(i.Substring(1)), enemy, partyMem[x]);
+						GD.Print(enemy.name + " activates spell " + i.Substring(1) +" at "+ turnOrder[x].name + " for " +enemy.SkillAttack(sList.GetSkill(i.Substring(1))));
 						break;
 						case "eStab1":
-						EmitSignal(nameof(SkillAtk),turnOrder[j].DamageCalc(turnOrder[j].SkillAttack(sList.GetSkill((string)i)),enemy));
-						display_text(enemy.name + "activates spell " + i +" at "+ turnOrder[x].name + " for " +enemy.SkillAttack(sList.GetSkill(i)));
+						EmitSignal(nameof(SkillAtk), sList.GetSkill(i.Substring(1)), enemy, partyMem[x]);
+						GD.Print(enemy.name + " activates spell " + i.Substring(1) +" at "+ turnOrder[x].name + " for " +enemy.SkillAttack(sList.GetSkill(i.Substring(1))));
 						break;
 					}
 					j++;
@@ -180,6 +181,7 @@ public class Battle : Control
 				EmitSignal(nameof(HealthUpdate3), turnOrder[2].health);
 				EmitSignal(nameof(HealthUpdate4), turnOrder[3].health);
 				EmitSignal(nameof(EHealthUpdate), enemy.health);
+				turnQueue.Clear();
 				GD.Print("New Turn!");
 			}
 			if(turnQueue.Count == 0)

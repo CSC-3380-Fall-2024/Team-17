@@ -24,6 +24,7 @@ public class TextLogic : Control
 		// Checks that the left mouse button is pressed
 		if (@event is InputEventMouseButton mouseEvent && mouseEvent.ButtonIndex == (int)ButtonList.Left && mouseEvent.Pressed)
 		{
+
 			GetNode<Control>("Textbox").Hide();
 			EmitSignal(nameof(TextboxClosed));
 		}

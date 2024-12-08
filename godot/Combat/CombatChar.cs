@@ -6,17 +6,17 @@ using System.Linq.Expressions;
 using System.Net;
 using System.Runtime.CompilerServices;
 
-public class Skill
+public class Skill : Godot.Object
 {
-	private int damage;
+	private int  damage;
 	private int hitrate;
 	public bool mag;
 	
 	public Skill(int damage, int hitrate, bool mag)
 	{
-		damage = this.damage;
-		hitrate = this.hitrate;
-		mag = this.mag;
+		this.damage = damage;
+		this.hitrate = hitrate;
+		this.mag = mag;
 	}
 
 	public int GetDamage()
@@ -31,10 +31,10 @@ public class Skill
 }
 public class SkillList
 {
-	public Skill ice1 = new Skill(30, 90, true);
-	public Skill fire1 = new Skill(30, 90, true);
-	public Skill elec1 = new Skill(30,90, true);
-	public Skill stab1 = new Skill(40, 80, false);
+	public static Skill ice1 = new Skill(30, 90, true);
+	public static Skill fire1 = new Skill(30, 90, true);
+	public static Skill elec1 = new Skill(30,90, true);
+	public static Skill stab1 = new Skill(40, 80, false);
 	public Dictionary<string, Skill> allSkills = new Dictionary<string, Skill>();
 
 	public SkillList()
@@ -59,7 +59,8 @@ public class SkillList
 		{
 			GD.Print("Error: Skill does not exist");
 		}
-		return allSkills[id];
+		Skill skill = allSkills[id];
+		return skill;
 	}
 	public string SkillToStr(Skill skill)
 	{
@@ -152,7 +153,6 @@ public class CombatChar: Control
 
 		public int BaseAttack()
 		{
-			GD.Print($"Attack! : {attack}");
 			return attack*30/2;
 		}
 
@@ -171,7 +171,7 @@ public class CombatChar: Control
 		public int DamageCalc(int damage, CombatChar enemy)
 		{
 			GD.Print($"damage: {damage}");
-			return damage/GetDef();
+			return damage/enemy.GetDef();
 		}
 
 		public void AddSkills(Dictionary<string,Skill> sList,string strSkl, string cName)
@@ -198,7 +198,13 @@ public class CombatChar: Control
 		public void Damage(int damageCalc, CombatChar combatChar)
 		{
 			combatChar.health -= damageCalc;
-			GD.Print("Enemy Health: "+combatChar.health);
+			GD.Print(combatChar.name +" Health: "+combatChar.health);
+		}
+		public void SklDmg(Skill skill, CombatChar combatChar, CombatChar enemy)
+		{
+			int dmg = DamageCalc(combatChar.SkillAttack(skill), enemy);
+			enemy.health -= dmg;
+			GD.Print(combatChar.name +" Health: "+enemy.health);
 		}
 		public int GetSpeed()
 		{
@@ -220,14 +226,12 @@ public class CombatChar: Control
 	public override void _Ready()
 	{
 		GetNode<Control>("..").Connect(nameof(Battle.Atk),GetNode<CombatChar>("."),nameof(Damage));
-		GetNode<Control>("..").Connect(nameof(Battle.SkillAtk),GetNode<CombatChar>("."),nameof(SkillAttack));
-		// GetNode<Control>("..").Connect(nameof(Battle.DmgTaken),GetNode<CombatChar>("."),nameof(Damage));
-		// GetNode<Control>("..").Connect(nameof(Battle.DmgDealt),GetNode<CombatChar>("."),nameof(Damage));
-
+		GetNode<Control>("..").Connect(nameof(Battle.SkillAtk),GetNode<CombatChar>("."),nameof(SklDmg));
+		//GetNode<Control>("..").Connect(nameof(Battle.EnemyChoiceSel), GetNode<CombatChar>("."), nameof(CombatEnemy.EnemySel));
 	}
 
 }
-	public class CombatPlayer:CombatChar
+	public class CombatPlayer : CombatChar
 	{
 		/// <summary>
 		/// The CombatPlayer Class, no different methods to differentiate it from CombatChar but exists if we need to
@@ -244,7 +248,7 @@ public class CombatChar: Control
 		public CombatPlayer(string cName, string file) : base(cName,file){}
 	}
 
-	public class CombatEnemy:CombatChar
+	public class CombatEnemy : CombatChar
 	{
 		[Signal]
 		public delegate void SigEnemyChoiceSel();
@@ -264,30 +268,31 @@ public class CombatChar: Control
 		: base(attack, def, mag, speed, luck, health, name){}
 		public CombatEnemy(string cName, string file) : base(cName,file){}
 
-		public void EnemyChoiceSel()
+		public void EnemySel(ref string chcSel)
 		{
 			Random rand = new Random();
 			int randNum = rand.Next(5);
 			List<string> stringList = GetSkills();
+			foreach (string i in stringList) { GD.Print(i); }
 			if (randNum >= 3)
 			{
 				if (skillList.Count() > 0)
 				{
 					randNum = rand.Next(skillList.Count()+1);
-					GetNode<Battle>("..").EmitSignal(nameof(Battle.SkillAtk),$"e{stringList[randNum]}");
+					chcSel = $"e{stringList[randNum]}";
 					return; //SkillAttack(stringList[randNum]) as int;
 				}
 				else
 				{
-					GetNode<Battle>("..").EmitSignal(nameof(Battle.Atk), "eattack");
+					chcSel = "eattack";
 					return;
 				}
 			}
 			else
 			{
-				GetNode<Battle>("..").EmitSignal(nameof(Battle.Atk), "eattack");
+				chcSel = "eattack";
 				return;
 			}
 		}
-	}
+}
 

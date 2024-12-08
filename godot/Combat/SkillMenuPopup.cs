@@ -27,7 +27,7 @@ public class SkillMenuPopup : PopupMenu
 		string txt = GetNode<PopupMenu>(".").GetItemText(id).Trim();
 		SkillList sList = new SkillList();
 		Skill skl = sList.GetSkill(txt);
-		GD.Print($"{txt}: {skl}");
+		GD.Print($"{txt}: {skl.mag}");
 		GetNode<Battle>("..").EmitSignal(nameof(Battle.OptionSelected), txt);
 		GetNode<Battle>("..").EmitSignal(nameof(Battle.NextCharGoes),true);
 	}
