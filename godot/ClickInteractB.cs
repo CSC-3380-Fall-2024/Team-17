@@ -13,7 +13,7 @@ public class ClickInteractB : Area
 	private void OnBodyEntered(Node body)
 	{
 
-		if (body is KinematicBody) // Looking for player Kinematic Body
+		if (body is KinematicBody) 
 		{
 			GD.Print("Collided with InteractableB!");
 			if (!string.IsNullOrEmpty(SceneToLoad))

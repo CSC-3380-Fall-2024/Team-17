@@ -19,8 +19,7 @@ public class Cell : Area
 	[Export] public Godot.Collections.Array<Vector3> spawnPoints = new Godot.Collections.Array<Vector3>(); // List of spawn points
 
 	private static Random random = new Random();
-	private HashSet<Vector3> usedSpawnPoints = new HashSet<Vector3>();  // Track used spawn points
-
+	private HashSet<Vector3> usedSpawnPoints = new HashSet<Vector3>();  
 	public override void _Ready()
 	{
 		topFace = GetNode<MeshInstance>("TopFace");
@@ -43,13 +42,13 @@ public class Cell : Area
 			return;  // Skip spawning if already done
 		}
 
-		hasSpawned = true; // Mark this cell as having spawned an interactable
+		hasSpawned = true; 
 
 		// Spawn Interactable A
 		if (random.NextDouble() < spawnProbabilityA && interactableA != null)
 		{
 			Vector3 spawnPoint = GetRandomSpawnPoint();  // Get the random spawn point for A
-			if (spawnPoint != Vector3.Zero)  // Make sure it's a valid point
+			if (spawnPoint != Vector3.Zero)  // Make sure the point can spawn
 			{
 				GD.Print($"Spawning Interactable A at {spawnPoint}");
 				SpawnInteractable(interactableA, spawnPoint);
@@ -60,7 +59,7 @@ public class Cell : Area
 		if (random.NextDouble() < spawnProbabilityB && interactableB != null)
 		{
 			Vector3 spawnPoint = GetRandomSpawnPoint();  // Get the random spawn point for B
-			if (spawnPoint != Vector3.Zero)  // Make sure it's a valid point
+			if (spawnPoint != Vector3.Zero)  // Make sure it can spawn
 			{
 				GD.Print($"Spawning Interactable B at {spawnPoint}");
 				SpawnInteractable(interactableB, spawnPoint);
@@ -73,14 +72,14 @@ public class Cell : Area
 		if (usedSpawnPoints.Contains(position))
 		{
 			GD.Print($"Spawn skipped at used point: {position}");
-			return;  // Skip spawning if position has already been used
+			return;  
 		}
 
 		Spatial interactableInstance = (Spatial)interactable.Instance();
 		interactableInstance.GlobalTransform = GlobalTransform.Translated(position);
 		AddChild(interactableInstance);
 
-		usedSpawnPoints.Add(position);  // Add the position to used spawn points
+		usedSpawnPoints.Add(position); 
 		GD.Print($"Spawned {interactableInstance.Name} at {position}");
 	}
 
@@ -88,11 +87,11 @@ public class Cell : Area
 	{
 		if (spawnPoints.Count > 0)
 		{
-			// Pick a random index and check if it's already used
+			
 			Vector3 spawnPoint = spawnPoints[random.Next(spawnPoints.Count)];
 			GD.Print($"Selected Spawn Point: {spawnPoint}");
 
-			// If the spawn point has already been used, try again
+			
 			if (usedSpawnPoints.Contains(spawnPoint))
 			{
 				GD.Print($"Spawn point {spawnPoint} already used. Choosing a different point.");
