@@ -98,7 +98,7 @@ wait_time = 0.05
 autostart = true
 
 [node name="KinematicBody" type="KinematicBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.00223, 0 )
+transform = Transform( 0.698, 0, 0, 0, 0.698, 0, 0, 0, 0.698, 0, 1.00223, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="KinematicBody"]
 transform = Transform( 0.406, -9.33375e-05, -5.93219e-05, -5.92864e-05, 0.000189784, -0.406, 9.33601e-05, 0.406, 0.000189773, 0, 0, 0 )
