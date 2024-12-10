@@ -5,10 +5,10 @@ public class ClickInteract : Area
 {
 	public override void _Ready()
 	{
-		// Connect the input event to handle clicking
+		// Connect the input to handle clicking
 		Connect("input_event", this, nameof(OnInteractableClicked));
 		
-		// Connect the body_entered signal to handle collisions with other objects
+		// Connect the body_entered signal to for collision
 		Connect("body_entered", this, nameof(OnBodyEntered));
 	}
 
@@ -22,10 +22,9 @@ public class ClickInteract : Area
 
 	private void OnBodyEntered(Node body)
 	{
-		// Check if the body that entered is the player or any specific object
-		if (body is KinematicBody player)  // Adjust this based on the type of the object that collides with it
+		// Check if the body that entered is the player
+		if (body is KinematicBody player)  
 		{
-			GD.Print("Player collided with interactable, removing...");
 			QueueFree(); // Remove the object when the player runs into it
 		}
 	}

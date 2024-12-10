@@ -44,7 +44,7 @@ public class World : Spatial
 	
 	private void GenerateMap()
 	{
-		var mapInstance = GetNode<Node2D>("Map"); //ResourceLoader.Load<PackedScene>("res://Map.tscn").Instance();
+		var mapInstance = GetNode<Node2D>("Map"); 
 		TileMap tileMap = mapInstance.GetChild(0) as TileMap;
 		Array<Vector2> usedTiles = new Array<Vector2>();
 		foreach (var vector in tileMap.GetUsedCells())

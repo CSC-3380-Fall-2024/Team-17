@@ -15,7 +15,7 @@ public class ClickInteractB : Area
 
 		if (body is KinematicBody) 
 		{
-			GD.Print("Collided with InteractableB!");
+			GD.Print("Collided with Enemyyy!");
 			if (!string.IsNullOrEmpty(SceneToLoad))
 			{
 				GetTree().ChangeScene(SceneToLoad);

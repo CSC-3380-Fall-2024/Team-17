@@ -89,7 +89,7 @@ public class Player : Spatial
 
 		Vector3 movementDirection = Vector3.Zero;
 		int turnDir = (turnQ ? 1 : 0) - (turnE ? 1 : 0);
-		//float tileSize = Globals.GRID_SIZE; unused
+
 
 		if (goW) movementDirection += -GlobalTransform.basis.z * Globals.GRID_SIZE;
 		else if (goS) movementDirection += GlobalTransform.basis.z * Globals.GRID_SIZE;
