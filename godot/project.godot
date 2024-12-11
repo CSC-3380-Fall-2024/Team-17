@@ -13,10 +13,22 @@ config_version=4
 config/name="CSC 3380 Group Project"
 run/main_scene="res://DebugMenu.tscn"
 config/icon="res://icon.png"
+<<<<<<<HEADrun/main_scene="res://DebugMenu.tscn"
 
 [autoload]
 
 Player="*res://Player.tscn"
+
+[display]
+
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
+
+[global]
+
+strecth=false
+stretch=false
+viewport=false
 
 [gui]
 
@@ -83,6 +95,8 @@ project/assembly_name="CSC 3380 Group Project"
 [physics]
 
 common/enable_pause_aware_picking=true
+2d/default_gravity=0
+"<<<<<<<HEAD[rendering]environment/default_environment"="res://default_env.tres"
 
 [rendering]
 

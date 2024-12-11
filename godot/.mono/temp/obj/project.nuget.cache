@@ -1,11 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "6sR5XmUBe9w=",
+  "dgSpecHash": "DYF4Gist1KQPbNsHxDcYlAJcvvOW66BUBs6R36hhJKcHcTmJN29oLKlOUx4V0txe67Ve8YMY6FDGgP0iDijY9g==",
   "success": true,
-  "projectFilePath": "D:\\Documents v.2\\Team-17\\godot\\CSC 3380 Group Project.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\balka\\.nuget\\packages\\microsoft.netframework.referenceassemblies\\1.0.3\\microsoft.netframework.referenceassemblies.1.0.3.nupkg.sha512",
-    "C:\\Users\\balka\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net472\\1.0.3\\microsoft.netframework.referenceassemblies.net472.1.0.3.nupkg.sha512"
-  ],
+  "projectFilePath": "C:\\Users\\Gerald\\Documents\\Team-17\\godot\\CSC 3380 Group Project.csproj",
+  "expectedPackageFiles": [],
   "logs": []
 }
