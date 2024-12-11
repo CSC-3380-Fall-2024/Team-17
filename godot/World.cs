@@ -97,18 +97,5 @@ public class World : Spatial
 			cell.UpdateFaces(usedTiles);
 		}
 	}
-	 public override void _Input(InputEvent @event)
-	{
-		if (@event is InputEventKey eventKey && eventKey.Pressed && eventKey.Scancode == (int)KeyList.Escape)
-		{
-			GoToStartScreen();
-		}
-	}
-
-	private void GoToStartScreen()
-	{
-		// Change scene to the beginning screen
-		GetTree().ChangeScene("res://DebugMenu.tscn"); 
-	}
 }
 
