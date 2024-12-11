@@ -24,8 +24,12 @@ public class Player : Spatial
 		timerprocessor.Connect("timeout", this, nameof(OnTimerTimeout));
 	}
 	
-	  public override void _Input(InputEvent @event)
+	 public override void _Input(InputEvent @event)
 	{
+		if (@event is InputEventKey eventKey && eventKey.Pressed && eventKey.Scancode == (int)KeyList.Escape)
+		{
+			GoToStartScreen();
+		}
 		if (@event is InputEventMouseButton mouseEvent && IsLeftClick(mouseEvent))
 		{
 			CheckForInteractableInFront();
@@ -142,4 +146,9 @@ public class Player : Spatial
 			}
 		}
 	}
-}
+	 private void GoToStartScreen()
+	{
+		// Change scene to the beginning screen or debug menu
+		GetTree().ChangeScene("res://DebugMenu.tscn");
+	}
+  }
