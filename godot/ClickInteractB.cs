@@ -3,19 +3,24 @@ using System;
 
 public class ClickInteractB : Area
 {
+
 	[Export] public string SceneToLoad = "res://Combat/Battle.tscn";
+	
 
 	public override void _Ready()
 	{
+		// Connect the input event to the handler
+
 		Connect("body_entered", this, nameof(OnBodyEntered));
 	}
+
 
 	private void OnBodyEntered(Node body)
 	{
 
-		if (body is KinematicBody) 
+		if (body is KinematicBody) // Looking for player Kinematic Body
 		{
-			GD.Print("Collided with Enemyyy!");
+			GD.Print("Collided with InteractableB!");
 			if (!string.IsNullOrEmpty(SceneToLoad))
 			{
 				GetTree().ChangeScene(SceneToLoad);
