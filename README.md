@@ -44,7 +44,7 @@ If you do not have SDK version 6 installed, you can download it here:
 | Look to left	   | `Q`		          |
 | Look to right	| `E`		          |
 | Click           | `Left Mouse`     |
-
+| Menu            | `Escape`         |
 
 
 
