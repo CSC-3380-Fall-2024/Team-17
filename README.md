@@ -26,6 +26,8 @@ If you do not have SDK version 6 installed, you can download it here:
 
 2. **Run the Game**
    - After loading the project, click the 'Room Select' button, then choose 'Select a Room', and finally select the 'Starter Floor' to begin the game.
+Or
+   -Click this Itch.io link https://ghebert3.itch.io/the-dungeon
 
 ## Features
 
