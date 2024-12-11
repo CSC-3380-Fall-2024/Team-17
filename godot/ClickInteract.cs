@@ -25,7 +25,7 @@ public class ClickInteract : Area
 		// Check if the body that entered is the player
 		if (body is KinematicBody player)  
 		{
-			QueueFree(); // Remove the object when the player runs into it
+			QueueFree(); 
 		}
 	}
 }
