@@ -3,27 +3,22 @@ using System;
 
 public class ClickInteractB : Area
 {
-	[Export] public string SceneToLoad = "res://Combat/Battle.tscn";
-
+	// The path to the scene you want to switch to
+	[Export] public string SceneToLoad = "res://Combat.tscn";
+	
 	public override void _Ready()
 	{
-		Connect("body_entered", this, nameof(OnBodyEntered));
+		// Connect the input event to the handler
+		Connect("input_event", this, nameof(OnInteractableClicked));
 	}
 
-	private void OnBodyEntered(Node body)
+	private void OnInteractableClicked(Node camera, InputEvent inputEvent, Vector3 clickPosition, Vector3 normal, int shapeIdx)
 	{
-
-		if (body is KinematicBody) 
+		// Check if the left mouse button was clicked
+		if (inputEvent is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == (int)ButtonList.Left)
 		{
-			GD.Print("Collided with Enemyyy!");
-			if (!string.IsNullOrEmpty(SceneToLoad))
-			{
-				GetTree().ChangeScene(SceneToLoad);
-			}
-			else
-			{
-				GD.Print("Scene Incorrect");
-			}
+			// Change the scene when the object is clicked
+			GetTree().ChangeScene(SceneToLoad);
 		}
 	}
 }
