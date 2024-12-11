@@ -25,7 +25,7 @@ If you do not have SDK version 6 installed, you can download it here:
    - Select the project file and click "Open".
 
 2. **Run the Game**
-   - Once the project is loaded, click the play button in the Godot editor to run the game.
+   - After loading the project, click the 'Room Select' button, then choose 'Select a Room', and finally select the 'Starter Floor' to begin the game.
 
 ## Features
 
