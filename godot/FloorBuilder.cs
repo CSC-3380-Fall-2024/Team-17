@@ -20,7 +20,7 @@ public class FloorBuilder : Spatial
 	private int roomsSpawned = 0; // Tracks the number of rooms spawned
 	private List<Cell> cells = new List<Cell>(); // List to store generated cells
 	private TileMap tileMap; // The tile map to place cells on
-	private Random random = new Random(); // Ra	ndom number generator for placement
+	private Random random = new Random(); // Random number generator for placement
 
 	// Called when the node is added to the scene tree
 	public override void _Ready()
