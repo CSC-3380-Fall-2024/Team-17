@@ -22,7 +22,7 @@ If you do not have SDK version 6 installed, you can download it here:
    - Launch Godot 3.6.
    - Click on the "Import" button.
    - Navigate to the folder where you downloaded/extracted the repository.
-   - Select the `project.godot` file and click "Open".
+   - Select the project file and click "Open".
 
 2. **Run the Game**
    - Once the project is loaded, click the play button in the Godot editor to run the game.
@@ -41,9 +41,9 @@ If you do not have SDK version 6 installed, you can download it here:
 | Move Backward   | `S`              |
 | Move Left       | `A`              |
 | Move Right      | `D`              |
-| Look to left	  | `Q`		           |
-| Look to right	  | `E`		           |
-| Click           | `Left Mouse'     |
+| Look to left	   | `Q`		          |
+| Look to right	| `E`		          |
+| Click           | `Left Mouse`     |
 
 
 
