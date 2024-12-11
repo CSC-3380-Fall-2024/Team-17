@@ -2,6 +2,7 @@ using Godot;
 using Godot.Collections;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 
 public class MapCreator : TileMap
@@ -26,19 +27,21 @@ public class MapCreator : TileMap
 		while(!currentFile.Equals(""))
 		{
 			Node newMapInstance = ResourceLoader.Load<PackedScene>("res://Rooms/" + currentFile).Instance();
-			newMapInstance.GetChild(0);
 			TileMap newMap = newMapInstance.GetChild(0) as TileMap;
+			newMapInstance.QueueFree();
+			newMap.Visible = false;
+			GD.Print(currentFile);
+			GD.Print(newMap.GetUsedCells());
 			dict.Add(i, newMap);
+			
 			i++;
 			currentFile = dir.GetNext();
 		};
 
-		GD.Print(dict.Keys);
-
 		//the following code is temporary and probably won't be used later (this behavior should be relegated to a helper function)
 		tilePositions.RemoveAll(allVectors);
-		GD.Print(dict[rand.Next(dict.Keys.Count)]);
 		Godot.Collections.Array newCells = dict[rand.Next(dict.Keys.Count)].GetUsedCells();
+		GD.Print(newCells);
 		foreach(Vector2 v in newCells)
 		{
 			tilePositions.Add(v);
@@ -51,7 +54,7 @@ public class MapCreator : TileMap
 		}
 	}
 
-	private List<Vector2> V2Rotate90(List<Vector2> list)
+	protected List<Vector2> V2Rotate90(List<Vector2> list)
 	{
 		List<Vector2> rlist = list;
 		int XMax = 0;
@@ -261,3 +264,79 @@ public class MapCreator : TileMap
 
 }
 
+class Room
+{
+	TileMap Map;
+	Vector2[] bounds = new Vector2[2];
+	Vector2[] connectors = new Vector2[0];
+	bool[] conReady = new bool[0];
+
+	protected Room(TileMap map)
+	{
+		Map = map;
+		bounds[0] = new Vector2(Int32.MaxValue, Int32.MaxValue);
+		bounds[1] = new Vector2(Int32.MinValue, Int32.MinValue);
+		foreach(Vector2 v in Map.GetUsedCells())
+		{
+			if(Map.GetCellv(v) == 14)
+			{
+				connectors.Append(v);
+				conReady.Append(true);
+				continue;
+			}
+			if (v.x < bounds[0].x) bounds[0].x = v.x;
+			if (v.x > bounds[1].x) bounds[1].x = v.x;
+			if (v.y < bounds[0].y) bounds[0].y = v.y;
+			if (v.y > bounds[1].y) bounds[1].y = v.y;
+		}
+		sortConnectors(connectors);
+	}
+	protected TileMap GetMap()
+	{
+		return this.Map;
+	}
+	protected Vector2[] GetBounds()
+	{
+		return bounds;
+	}
+	protected Vector2[] GetConnectors()
+	{
+		return connectors;
+	}
+	protected bool[] GetConnectorReady()
+	{
+		return conReady;
+	}
+	protected enum Direction {
+		NORTH,
+		EAST,
+		SOUTH,
+		WEST
+	}
+	private void sortConnectors(Vector2[] arr)
+	{
+		if(arr.Count() != 4)
+		{
+			GD.Print("Incorrect array size!");
+			return;
+		}
+		//insertion sort by ascending y value: north ends up first, south ends up last
+		int n = 4;
+		for(int i = 1; i < n; i++)
+		{
+			int key = (int)arr[i].y;
+			for(int j = i - 1; j >= 0 && arr[j].y > key; j--) arr[j+1] = arr[j];
+		}
+		//make sure east comes before west
+		if(arr[1].x < arr[2].x)
+		{
+			Vector2 tmp = arr[1];
+			arr[1] = arr[2];
+			arr[2] = tmp;
+		}
+		//swap west and south to match enum order
+		Vector2 tmp2 = arr[3];
+		arr[3] = arr[2];
+		arr[2] = tmp2;
+	} 
+}
