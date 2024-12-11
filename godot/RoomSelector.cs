@@ -37,7 +37,7 @@ public class RoomSelector : MenuButton
 		tscnPath.Load("res://Config/debug.cfg");
 		tscnPath.SetValue("FLOOR_SETTINGS","MAP_NAME", id);
 		tscnPath.Save("res://Config/debug.cfg");
-		//GetTree().ChangeScene("res://World.tscn"); //greyed out because breaks if implemented
+		GetTree().ChangeScene("res://World.tscn"); //greyed out because breaks if implemented
 	}
 	public override void _Ready()
 	{

@@ -14,8 +14,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0291784, -0.00336307, 0.011
 collision_layer = 4
 collision_mask = 4
 script = ExtResource( 1 )
-spawnProbabilityA = 0.01
-spawnProbabilityB = 0.1
+spawnProbabilityA = 0.0
+spawnProbabilityB = 0.03
 interactableA = ExtResource( 6 )
 interactableB = ExtResource( 5 )
 
