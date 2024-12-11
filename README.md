@@ -1,4 +1,4 @@
-# Godot 3D Game
+# The Dungeon
 
 This project is a 3D game built using the Godot Engine. Below you can find instructions on how to set up and run the game.
 
