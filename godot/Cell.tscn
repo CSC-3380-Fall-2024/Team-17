@@ -10,12 +10,12 @@
 [sub_resource type="BoxShape" id=1]
 
 [node name="Cell" type="Area"]
-transform = Transform( 1.00216, 0, 0, 0, 1.00216, 0, 0, 0, 1.00216, -0.0291784, -0.00336307, 0.0115721 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0291784, -0.00336307, 0.0115721 )
 collision_layer = 4
 collision_mask = 4
 script = ExtResource( 1 )
-spawnProbabilityA = 0.1
-spawnProbabilityB = 0.1
+spawnProbabilityA = 0.0
+spawnProbabilityB = 0.03
 interactableA = ExtResource( 6 )
 interactableB = ExtResource( 5 )
 
